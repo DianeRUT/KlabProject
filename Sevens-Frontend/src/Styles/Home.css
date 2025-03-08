@@ -1,241 +1,319 @@
-.home-page {
-    padding: 20px;
+/* General Styling */
+.home-page { 
+  padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
-  }
-  .shop-now-btn {
-    display: flex;
-    background-color: black;
-    color: white;
-    padding: 12px 60px;
+}
+
+/* Shop Now Button */
+.shop-now-btn {
+  display: flex;
+  background-color: black;
+  color: white;
+  padding: 12px 60px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s ease;
+}
+
+.shop-now-btn:hover {
+  background-color: #333;
+}
+
+/* Brand Section */
+.brandss {
+  display: inline-flex;
+  color:#808080;
+  
+}
+
+/* Hero Section */
+.hero {
+  background-color: #F2F0F1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 40px 20px;
+}
+
+.hero-text {
+  flex: 1;
+  min-width: 280px;
+}
+
+.hero-text h1 {
+  font-size: 58px;
+  margin-bottom: 20px;
+  font-family: "Integral CF Regular";
+}
+
+/* Stats Section */
+.stats {
+  display: flex;
+  gap: 15px;
+  font-weight: bold;
+  margin: 15px 0;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hero Image */
+.hero-image {
+  flex: 1;
+  min-width: 280px;
+  text-align: center;
+  
+}
+
+.hero-image img {
+  max-width: 100%;
+  height: auto;
+  zoom: 1.5;
+}
+
+/* Section Titles */
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin: 40px 0 20px;
+}
+
+/* Items Grid (New Arrivals, Top Selling) */
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.item {
+  text-align: center;
+  border: 1px solid #eee;
+  padding: 20px;
+  position: relative;
+}
+.slogan{
+  color:#808080;
+  
+}
+.star-logo {
+  position: absolute;
+  top: 130px;
+  left: 780px;
+  width: 40px; /* Adjust logo size as needed */
+  height: auto;
+}
+.star-logo1{
+  /* position: relative; */
+  bottom: 130px;
+  top:130px;
+  left: 780px;
+  width: 40px;  
+  height: auto;
+}
+
+.item img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Star Rating - Updated */
+.star-rating {
+  color: #FFC633; /* Gold color */
+  font-size: 16px;
+}
+
+/* Discount Eclipse - Updated */
+.discount {
+  background-color: rgba(255, 0, 0, 0.1); /* Light red background */
+  color: red; /* Text color */
+  font-size: 10px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 50%; /* Small eclipse shape */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px; /* Small eclipse */
+  height: 20px; /* Small eclipse */
+  margin-left: 8px; /* Space between price and discount */
+}
+
+/* Centered View All Button - Updated */
+.view-all-btn {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 30px auto;
+    padding: 10px 60px;
     font-size: 16px;
-    font-weight: bold;
-    border: none;
+    font-weight: 20px;
+    background: transparent;
+    border: 1px solid #ccc; /* Light border */
+    cursor: pointer;
+    transition: 0.3s ease;
     border-radius: 25px;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s ease;
-  }
-  
-  .shop-now-btn:hover {
-    background-color: #333;
-  }
-  .brandss{
-    display: inline-flex;
-  }
-  
-  /* Hero Section */
+}
+
+.view-all-btn:hover {
+  border-color: black;
+}
+
+.old-price{
+  color: #808080; /* Ash color */
+    text-decoration: line-through; /* Strikethrough effect */
+    font-size: 14px;
+    margin-left: 8px;
+}
+.price{
+  font-family: "Satoshi";
+  font-size: 15px;
+ 
+}
+.rating-text{
+  color:black;
+  font-family: "Satoshi";
+  font-size: 10px;
+}
+/* Dress Style Section */
+.dress-style {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.style-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.style-item {
+  width: 200px;
+  text-align: center;
+}
+
+.style-item img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+/* Happy Customers Section */
+.happy-customers {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.testimonials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.testimonial {
+  width: 250px;
+  border: 1px solid #eee;
+  padding: 20px;
+  border-radius: 4px;
+}
+
+.testimonial img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* Subscribe Section */
+.subscribe {
+  background: #f9f9f9;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.subscribe form {
+  display: inline-block;
+  position: relative;
+  margin-top: 20px;
+}
+
+.subscribe input {
+  padding: 10px;
+  font-size: 16px;
+  width: 250px;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+.subscribe button {
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  background: #333;
+  color: #fff;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
   .hero {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: 40px 20px;
-    
-  }
-  
-  .hero-text {
-    flex: 1;
-    min-width: 280px;
-  }
-  
-  .hero-text h1 {
-    font-size: 32px;
-    margin-bottom: 20px;
-  }
-  
-  .stats {
-    display: flex;
-    gap: 15px;
-    font-weight: bold;
-    margin: 15px 0;
-    justify-content: space-around;
-    text-align: center;
-    margin-top: 50px;
-    
-  }
-  
- 
-  .stat-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
- 
-  
-  
-  
-  
-  .hero-image {
-    flex: 1;
-    min-width: 280px;
-    text-align: center;
-  }
-  
-  .hero-image img {
-    max-width: 100%;
-    height: auto;
-  }
-  
-  /* Section Titles */
-  .section-title {
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    margin: 40px 0 20px;
-  }
-  
-  /* Items Grid (New Arrivals, Top Selling) */
-  .items-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .item {
-    text-align: center;
-    border: 1px solid #eee;
-    padding: 20px;
-  }
-  
-  .item img {
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-  }
-  
-  .item p {
-    font-weight: bold;
-  }
-  
-  /* Dress Style Section */
-  .dress-style {
-    text-align: center;
-    padding: 40px 20px;
-  }
-  
-  .style-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .style-item {
-    width: 200px;
-    text-align: center;
-  }
-  
-  .style-item img {
-    width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-  }
-  
-  /* Happy Customers Section */
-  .happy-customers {
-    text-align: center;
-    padding: 40px 20px;
-  }
-  
-  .testimonials {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    max-width: 1000px;
-    margin: 0 auto;
-  }
-  
-  .testimonial {
-    width: 250px;
-    border: 1px solid #eee;
-    padding: 20px;
-    border-radius: 4px;
-  }
-  
-  .testimonial img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-bottom: 10px;
-  }
-  
-  /* Subscribe Section */
-  .subscribe {
-    background: #f9f9f9;
-    text-align: center;
-    padding: 40px 20px;
-  }
-  
-  .subscribe form {
-    display: inline-block;
-    position: relative;
-    margin-top: 20px;
-  }
-  
-  .subscribe input {
-    padding: 10px;
-    font-size: 16px;
-    width: 250px;
-    border: 1px solid #ccc;
-    border-radius: 4px 0 0 4px;
-    outline: none;
-  }
-  
-  .subscribe button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    background: #333;
-    color: #fff;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-  }
-  
-  /* Responsive */
-  @media (max-width: 768px) {
-    .hero {
       flex-direction: column;
       text-align: center;
-    }
-    
-    .hero-text,
-    .hero-image {
-      min-width: 100%;
-    }
-    
-    .hero-text h1 {
-      font-size: 28px;
-    }
   }
-  
-  @media (max-width: 480px) {
-    .items-grid {
+
+  .hero-text,
+  .hero-image {
+      min-width: 100%;
+  }
+
+  .hero-text h1 {
+      font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .items-grid {
       grid-template-columns: 1fr;
-    }
-    
-    .style-grid {
+  }
+
+  .style-grid {
       flex-direction: column;
       align-items: center;
-    }
-    
-    .style-item {
-      width: 80%;
-    }
-    
-    .testimonial {
-      width: 80%;
-    }
-    
-    .subscribe input {
-      width: 70%;
-    }
   }
-  
+
+  .style-item {
+      width: 80%;
+  }
+
+  .testimonial {
+      width: 80%;
+  }
+
+  .subscribe input {
+      width: 70%;
+  }
+}

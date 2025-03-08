@@ -5,6 +5,7 @@ import Home from "./Pages/Home";
 import Shop from "./Pages/Shop";
 import ProductDetail from "./Pages/ProductDetails";
 
+
 const App = () => {
   return (
     <Router>

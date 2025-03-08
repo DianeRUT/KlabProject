@@ -1,0 +1,33 @@
+.newsletter-section {
+    background-color: #000; /* Dark background */
+    color: #fff; /* White text */
+    padding: 20px;
+    margin-bottom: 40px;
+  }
+  
+  .newsletter-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .newsletter-input {
+    display: flex;
+    gap: 10px; /* Add space between input and button */
+  }
+  
+  .newsletter-input input {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    flex: 1; /* Allow input to take available space */
+  }
+  
+  .newsletter-input button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff7f50; /* Example button color */
+    color: #fff;
+    cursor: pointer;
+  }
