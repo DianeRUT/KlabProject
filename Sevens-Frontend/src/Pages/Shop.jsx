@@ -1,33 +1,225 @@
-import React from "react";
-import "../Styles/Shop.css";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import AuthModal from './Login';
+import "../Styles/Shop.css"; 
+import { Search, ShoppingBag, Heart, User, ChevronLeft, ChevronRight } from 'lucide-react';
 
-const products = [
-  { id: 1, name: "Product 1", price: "$29.99", image: "https://via.placeholder.com/300" },
-  { id: 2, name: "Product 2", price: "$39.99", image: "https://via.placeholder.com/300" },
-  { id: 3, name: "Product 3", price: "$49.99", image: "https://via.placeholder.com/300" },
-  { id: 4, name: "Product 4", price: "$59.99", image: "https://via.placeholder.com/300" },
-  { id: 5, name: "Product 5", price: "$69.99", image: "https://via.placeholder.com/300" },
-  { id: 6, name: "Product 6", price: "$79.99", image: "https://via.placeholder.com/300" },
-];
+// Importing images
+import MenShoes from '../assets/Images/58.jpg';
+import WomenShoes from '../assets/Images/52.jpeg';
+import SportCollection from '../assets/Images/22.jpeg';
+import accessories from '../assets/Images/63.jpg';
+import WhiteSneakers from '../assets/Images/64.jpg';
+import HighHeels from '../assets/Images/26.jpeg';
+import PerformanceRunners from '../assets/Images/24.jpeg';
+import LeatherBoots from '../assets/Images/65.jpg';
+import redAndBlackSneakers from '../assets/Images/41.jpeg';
+import whiteSneakers from '../assets/Images/54.jpeg';
+import whiteAndBlackSneakers from '../assets/Images/32.jpeg';
+import blackSneakers from '../assets/Images/55.jpeg';
 
-const Shop = () => {
+
+const ShopPage = () => {
+
+  // State for managing the modal visibility
+  const [modal, setModal] = useState(false);
+
+  {/* hook */}
+  const handleAuthModal = () => {
+    setModal(prev => !prev);
+    document.body.classList.toggle('modal-open', !modal);
+  };
+
   return (
-    <div className="shop-page">
-      <h1 className="page-title">Shop</h1>
-      <div className="products-grid">
-        {products.map((product) => (
-          <div className="product-card" key={product.id}>
-            <img src={product.image} alt={product.name} />
-            <div className="product-info">
-              <h2>{product.name}</h2>
-              <p className="price">{product.price}</p>
-              <button>Add to Cart</button>
+    <>
+    {modal && <AuthModal handleClose={handleAuthModal} />}
+      
+    <div className="container">
+      {/* Navigation */}
+      <nav className="navigation">
+        <div className="logo">SEVENS</div>
+        <div className="nav-links">
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/men" className="nav-link">Men</Link>
+          <Link to="/women" className="nav-link">Women</Link>
+          <Link to="/brands" className="nav-link">Brands</Link>
+          <Link to="/collections" className="nav-link">Collections</Link>
+          <Link to="/stories" className="nav-link">Stories</Link>
+        </div>
+        <div className="nav-icons">
+          <Search className="icon" size={20} />
+          <User className="icon" size={20} onClick={handleAuthModal} />
+          <ShoppingBag className="icon" size={20} />
+        </div>
+      </nav>
+
+        {/* Hero Section */}
+<div className="heros-section">
+  <div className="heros-content">
+    <h1 className="heros-title">Step into Style</h1>
+    <p className="heros-description">Discover the latest collection of footwear for every occasion</p>
+    <div className="heros-buttons">
+      <button className="btn btn-black">Shop Men</button>
+      <button className="btn btn-pink">Shop Women</button>
+    </div>
+  </div>
+  <div className="heros-image">
+    <div className="image-grid">
+      <img src={redAndBlackSneakers} alt="Red and black sneakers" className="grid-img" />
+      <img src={whiteSneakers} alt="White sneakers" className="grid-img" />
+      <img src={whiteAndBlackSneakers} alt="White and black sneakers" className="grid-img" />
+      <img src={blackSneakers} alt="Black sneakers" className="grid-img" />
+    </div>
+  </div>
+</div>
+
+  {/* Featured Brands */}
+  <div className="featured-section">
+        <h2 className="section-title">Featured Brands</h2>
+        <div className="brand-carousel">
+          <div className="arrow-button">
+            <ChevronLeft size={20} />
+          </div>
+          <div className="brands-icons">
+            <div className="brands-icon">1</div>
+            <div className="brands-icon">2</div>
+            <div className="brands-icon">3</div>
+            <div className="brands-icon">4</div>
+            <div className="brands-icon">
+              <img src="/api/placeholder/40/40" alt="Apple logo" className="icon-img" />
+            </div>
+            <div className="brands-icon">
+              <img src="/api/placeholder/40/40" alt="Nike logo" className="icon-img" />
             </div>
           </div>
-        ))}
+          <div className="arrow-button">
+            <ChevronRight size={20} />
+          </div>
+        </div>
+      </div>
+
+      {/* New Arrivals */}
+      <div className="arrivals-section">
+        <h2 className="section-title">New Arrivals</h2>
+        <div className="product-grid">
+          {/* Product 1 */}
+          <div className="product-card">
+            <div className="product-image-container">
+              <div className="wishlist-container">
+                <Heart size={20} className="wishlist-icon" />
+              </div>
+              <img src={WhiteSneakers} alt="Classic White Sneakers" className="product-image" />
+              <div className="product-navigation">
+                <button className="nav-arrow-btn left">
+                  <ChevronLeft size={18} />
+                </button>
+                <button className="nav-arrow-btn right">
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+            <h3 className="product-title">Classic White Sneakers</h3>
+            <div className="product-price">$129.95</div>
+          </div>
+
+          {/* Product 2 */}
+          <div className="product-card">
+            <div className="product-image-container">
+              <div className="wishlist-container">
+                <Heart size={20} className="wishlist-icon" />
+              </div>
+              <img src={HighHeels} alt="Designer High Heels" className="product-image" />
+              <div className="product-navigation">
+                <button className="nav-arrow-btn left">
+                  <ChevronLeft size={18} />
+                </button>
+                <button className="nav-arrow-btn right">
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+            <h3 className="product-title">Designer High Heels</h3>
+            <div className="product-price">$199.95</div>
+          </div>
+
+          {/* Product 3 */}
+          <div className="product-card">
+            <div className="product-image-container">
+              <div className="wishlist-container">
+                <Heart size={20} className="wishlist-icon" />
+              </div>
+              <img src={PerformanceRunners} alt="Performance Runners" className="product-image" />
+              <div className="product-navigation">
+                <button className="nav-arrow-btn left">
+                  <ChevronLeft size={18} />
+                </button>
+                <button className="nav-arrow-btn right">
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+            <h3 className="product-title">Performance Runners</h3>
+            <div className="product-price">$139.95</div>
+          </div>
+
+          {/* Product 4 */}
+          <div className="product-card">
+            <div className="product-image-container">
+              <div className="wishlist-container">
+                <Heart size={20} className="wishlist-icon" />
+              </div>
+              <img src={LeatherBoots} alt="Classic Leather Boots" className="product-image" />
+              <div className="product-navigation">
+                <button className="nav-arrow-btn left">
+                  <ChevronLeft size={18} />
+                </button>
+                <button className="nav-arrow-btn right">
+                  <ChevronRight size={18} />
+                </button>
+              </div>
+            </div>
+            <h3 className="product-title">Classic Leather Boots</h3>
+            <div className="product-price">$159.95</div>
+          </div>
+        </div>
+      </div>
+
+      {/* Shop by Category */}
+      <div className="category-section">
+        <h2 className="section-title">Shop by Category</h2>
+        <div className="category-grid">
+          <div className="category-card">
+            <img src={MenShoes} alt="Men's Shoes" className="category-image" />
+            <div className="category-overlay">
+              <span className="category-name">Men</span>
+            </div>
+          </div>
+
+          <div className="category-card">
+            <img src={WomenShoes} alt="Women's Shoes" className="category-image" />
+            <div className="category-overlay">
+              <span className="category-name">Women</span>
+            </div>
+          </div>
+
+          <div className="category-card">
+            <img src={SportCollection} alt="Sport Collection" className="category-image" />
+            <div className="category-overlay">
+              <span className="category-name">Sport Collection</span>
+            </div>
+          </div>
+
+          <div className="category-card">
+            <img src={accessories} alt="Accessories" className="category-image" />
+            <div className="category-overlay">
+              <span className="category-name">Accessories</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
+    </>
   );
 };
 
-export default Shop;
+export default ShopPage;

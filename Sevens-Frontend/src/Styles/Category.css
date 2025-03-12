@@ -1,0 +1,228 @@
+/* CategoryPage.css */
+.category-page {
+    font-family: sans-serif;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    color: #888;
+  }
+  
+  .content {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 150px;
+  }
+  
+  .sidebar {
+    width: 250px;
+  }
+  
+  .filters {
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  .filter-title {
+    font-weight: bold;
+    margin-bottom: 15px;
+  }
+  
+  .filter-icon {
+    float: right;
+    cursor: pointer;
+  }
+  
+  .filter-section {
+    margin-bottom: 20px;
+  }
+  
+  .filter-subtitle {
+    font-weight: bold;
+    margin-bottom: 10px;
+    cursor: pointer;
+  }
+  
+  .filter-arrow {
+    float: right;
+    transition: transform 0.2s ease;
+    font-size: 1.2em;
+    color: #666;
+  }
+  
+  .filter-subtitle:hover .filter-arrow {
+    transform: rotate(90deg);
+  }
+  
+  .price-range {
+    margin-top: 10px;
+    font-size: 0.9em;
+    color: #888;
+  }
+  
+  .colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .color {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+  }
+  
+  /* Add classes for different colors (e.g., .red, .blue, etc.) */
+  .red { background-color: red; }
+  .blue { background-color: blue; }
+  /* ... add more colors ... */
+  
+  .color.selected {
+    border-color: #333;
+  }
+  
+  .sizes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .size {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .size.selected {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .dress-styles {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .dress-style {
+    cursor: pointer;
+  }
+  
+  .dress-style.selected {
+    font-weight: bold;
+  }
+  
+  .apply-filter {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .product-grid {
+    width: calc(100% - 280px); /* Adjust based on sidebar width */
+  }
+  
+  .category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .category-title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  .category-info {
+    font-size: 0.9em;
+    color: #888;
+  }
+  
+  .products {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Adjust for number of columns */
+    gap: 20px;
+  }
+  
+  .product {
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+  }
+  
+  .product img {
+    width: 100%;
+    height: 200px; /* Adjust as needed */
+    object-fit: cover;
+    margin-bottom: 10px;
+  }
+  
+  .product-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .product-rating {
+    color: #ffc107;
+    margin-bottom: 5px;
+  }
+  
+  .rating-num {
+    margin-left: 5px;
+    font-size: 0.9em;
+    color: #888;
+  }
+  
+  .product-price {
+    font-size: 1.1em;
+  }
+  
+  .product-price .old-price {
+    text-decoration: line-through;
+    color: #888;
+    margin-left: 5px;
+  }
+  
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  .pages {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .page {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .page.active {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .prev,
+  .next {
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+  }

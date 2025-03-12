@@ -1,0 +1,151 @@
+/* CartPage.css */
+.cart-page {
+    font-family: sans-serif;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .header {
+    font-size: 0.9em;
+    margin-bottom: 20px;
+    color: #888;
+  }
+  
+  .cart-content {
+    display: flex;
+    gap: 30px;
+  }
+  
+  .cart-items {
+    width: 60%;
+  }
+  
+  .cart-items h1 {
+    margin-bottom: 20px;
+  }
+  
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .item-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .item-image {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+  }
+  
+  .item-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .item-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .item-size,
+  .item-color,
+  .item-price {
+    font-size: 0.9em;
+    color: #666;
+  }
+  
+  .item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .remove-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em; /* Adjust icon size */
+    color: #333; /* Adjust icon color */
+  }
+  
+  .quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .quantity-btn {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    background: none; /* Remove default button background */
+    color: #333; /* Adjust icon color */
+  }
+  
+  .order-summary {
+    width: 35%;
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+  }
+  
+  .order-summary h2 {
+    margin-bottom: 20px;
+  }
+  
+  .summary-item,
+  .summary-total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .summary-total {
+    font-weight: bold;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+  }
+  
+  .promo-code {
+    display: flex;
+    margin-top: 20px;
+    gap: 5px;
+  }
+  
+  .promo-code input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+  }
+  
+  .apply-promo {
+    background-color: #333;
+    color: #fff;
+    padding: 8px 15px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .checkout-btn {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    width: 100%;
+    cursor: pointer;
+    display: flex; /* Use flex to align icon and text */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    gap: 5px; /* Space between text and icon */
+  }

@@ -6,7 +6,7 @@
 }
 
 /* Shop Now Button */
-.shop-now-btn {
+.shops-now-btn {
   display: flex;
   background-color: black;
   color: white;
@@ -18,9 +18,10 @@
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.3s ease;
+  text-decoration: none;
 }
 
-.shop-now-btn:hover {
+.shops-now-btn:hover {
   background-color: #333;
 }
 
@@ -190,60 +191,220 @@
   font-family: "Satoshi";
   font-size: 10px;
 }
-/* Dress Style Section */
-.dress-style {
+/* DressStyles.css */
+.dress-styles-container {
+  background-color: #f0f0f0; /* Light grey background */
+  padding: 20px;
+  border-radius: 10px;
+  
+  width: 70%;
+  /* margin: 0 auto;  */
+  margin: 20px auto; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional shadow */
+}
+
+.section-title {
   text-align: center;
-  padding: 40px 20px;
+  font-size: 1.5em;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
-.style-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+.styles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns */
+  grid-template-rows: 200px 150px; /* Different row heights */
+  gap: 10px;
 }
 
-.style-item {
-  width: 200px;
+.style-item-casual {
   text-align: center;
+  border-radius: 8px;
+  overflow: hidden; /* Hide any overflow from the image */
+  position: relative; /* For absolute positioning of the label */
+  left: 120px;
+
+ 
+}
+.style-item-formal {
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden; /* Hide any overflow from the image */
+  position: relative; /* For absolute positioning of the label */
+  left: -70px;
+ ;
+}
+.style-item-party {
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden; /* Hide any overflow from the image */
+  position: relative; /* For absolute positioning of the label */
+  left: 120px;
+  top: -40px;
+}
+.style-item-gym {
+  text-align: center;
+  border-radius: 8px;
+  overflow: hidden; /* Hide any overflow from the image */
+  position: relative; /* For absolute positioning of the label */
+ left: 120px;
+ top: -40px;
+}
+.style-image {
+  height: 100%; /* Take up full height of grid cell */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  position: relative; /* For stacking context */
 }
 
-.style-item img {
-  width: 100%;
-  height: auto;
-  margin-bottom: 10px;
+.casual-image {
+  background-image: url('../assets/Images/image21.png'); 
+  height: 80%; /* Take up full height of grid cell */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  position: relative;
+  width: 50%;
+  
 }
 
-/* Happy Customers Section */
+.formal-image {
+  background-image: url('../assets/Images/image18.png'); 
+  height: 80%; /* Take up full height of grid cell */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  position: relative;
+  
+ 
+}
+
+.party-image {
+  background-image: url('../assets/Images/image20.png');
+  height: 80%; /* Take up full height of grid cell */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  position: relative;
+  
+}
+
+.gym-image {
+  background-image: url('../assets/Images/image19.png'); 
+  height: 80%; /* Take up full height of grid cell */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+  position: relative;
+  width: 50%;
+}
+
+.style-label {
+  position: absolute; /* Position the label over the image */
+  top: 10px;
+  left: -5px;
+  padding: 5px 10px;
+  font-weight: bold;
+  border-radius: 5px;
+ 
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .styles-grid {
+    grid-template-columns: 1fr; /* Single column on smaller screens */
+    grid-template-rows: auto; /* Reset row heights on smaller screens */
+  }
+
+  .style-image {
+    height: 150px; /* Set a fixed height for smaller screens */
+  }
+}
+/* HappyCustomers.css */
 .happy-customers {
-  text-align: center;
   padding: 40px 20px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.title-container h2 {
+  margin: 0 20px;
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.arrow-container {
+  display: flex;
+  gap: 20px; /* Adjust the gap as needed */
+  right: 10px;
+  position: absolute;
+}
+
+.arrow {
+  font-size: 1em;
+  cursor: pointer;
+  color: #333;
+  transition: transform 0.2s; 
+}
+
+.arrow:hover {
+  transform: scale(1.1); /* Makes the arrow slightly larger on hover */
 }
 
 .testimonials {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 20px;
-  max-width: 1000px;
-  margin: 0 auto;
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
+  padding: 20px 0;
 }
 
 .testimonial {
-  width: 250px;
-  border: 1px solid #eee;
-  padding: 20px;
-  border-radius: 4px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 300px;
+  text-align: left;
 }
 
-.testimonial img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 50%;
+.rating {
+  color: #ffc107;
+  font-size: 1.2em;
   margin-bottom: 10px;
+}
+
+.customer-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.name {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.check-icon {
+  color: #fff;
+  background-color: green;
+  border-radius: 50%;
+  padding: 3px;
+  font-size: 0.8em;
+}
+
+.message {
+  font-style: italic;
+  color: #555;
 }
 
 /* Subscribe Section */
