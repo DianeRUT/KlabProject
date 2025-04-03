@@ -5,17 +5,17 @@ const AboutPage = () => {
   const teamMembers = [
     {
       id: 1,
-      name: "Sarah Johnson",
+      name: "Queen Martine",
       position: "Founder & CEO",
       image: "/images/team-member-1.jpg",
-      bio: "Sarah founded ShopNow in 2015 with a vision to create a seamless online shopping experience. With over 15 years in retail and e-commerce, she leads our company strategy and growth initiatives.",
+      bio: "Sarah founded Sevens in 2015 with a vision to create a seamless online shopping experience. With over 15 years in retail and e-commerce, she leads our company strategy and growth initiatives.",
     },
     {
       id: 2,
       name: "Michael Chen",
       position: "Creative Director",
       image: "/images/team-member-2.jpg",
-      bio: "Michael oversees all creative aspects of ShopNow, from brand identity to user experience. His background in design and fashion helps shape our unique aesthetic and customer journey.",
+      bio: "Michael oversees all creative aspects of Sevens, from brand identity to user experience. His background in design and fashion helps shape our unique aesthetic and customer journey.",
     },
     {
       id: 3,
@@ -47,14 +47,14 @@ const AboutPage = () => {
           <div className="story-content">
             <h2>Our Story</h2>
             <p>
-              ShopNow began in 2015 as a small online boutique with a curated collection of fashion items. What started
+              Sevens began in 2015 as a small online boutique with a curated collection of fashion items. What started
               as a passion project in a tiny apartment has grown into a global e-commerce destination serving customers
               in over 50 countries.
             </p>
             <p>
-              Our founder, Sarah Johnson, recognized a gap in the market for a shopping platform that combined
+              Our founder, Martine, recognized a gap in the market for a shopping platform that combined
               high-quality products, exceptional customer service, and a seamless digital experience. With this vision
-              in mind, ShopNow was born.
+              in mind, Sevens was born.
             </p>
             <p>
               Over the years, we've expanded our product range to include everything from designer clothing and footwear
@@ -128,7 +128,7 @@ const AboutPage = () => {
         <section className="team-section">
           <h2>Meet Our Team</h2>
           <p className="team-intro">
-            The passionate individuals behind ShopNow who work tirelessly to bring you the best shopping experience.
+            The passionate individuals behind Sevens who work tirelessly to bring you the best shopping experience.
           </p>
 
           <div className="team-grid">

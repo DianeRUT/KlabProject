@@ -257,8 +257,10 @@
 
 /* Newsletter Section */
 .newsletter-section {
-  background-color: #007bff;
-  color: #fff;
+  background-color: #f0f7ff;
+  max-width: 800px;
+  margin: 0 auto;
+  /* color: #fff; */
   padding: 60px 0;
 }
 
