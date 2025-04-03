@@ -1,0 +1,75 @@
+.error-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+  }
+  
+  .error-container {
+    max-width: 500px;
+    text-align: center;
+  }
+  
+  .error-icon {
+    font-size: 80px;
+    color: #dc3545;
+    margin-bottom: 20px;
+  }
+  
+  .error-page h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .error-page p {
+    font-size: 18px;
+    color: #666;
+    margin-bottom: 30px;
+  }
+  
+  .error-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+  }
+  
+  .primary-btn,
+  .secondary-btn {
+    padding: 12px 24px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .primary-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+  }
+  
+  .primary-btn:hover {
+    background-color: #0069d9;
+  }
+  
+  .secondary-btn {
+    background-color: #fff;
+    color: #333;
+    border: 1px solid #ddd;
+  }
+  
+  .secondary-btn:hover {
+    background-color: #f8f9fa;
+  }
+  
+  @media (max-width: 576px) {
+    .error-actions {
+      flex-direction: column;
+      gap: 10px;
+    }
+  }
+  
+  

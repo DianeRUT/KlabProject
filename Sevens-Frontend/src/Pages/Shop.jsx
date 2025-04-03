@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import AuthModal from './Login';
 import "../Styles/Shop.css"; 
 import { Search, ShoppingBag, Heart, User, ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -21,38 +20,13 @@ import blackSneakers from '../assets/Images/55.jpeg';
 
 const ShopPage = () => {
 
-  // State for managing the modal visibility
-  const [modal, setModal] = useState(false);
-
-  {/* hook */}
-  const handleAuthModal = () => {
-    setModal(prev => !prev);
-    document.body.classList.toggle('modal-open', !modal);
-  };
+ 
 
   return (
     <>
-    {modal && <AuthModal handleClose={handleAuthModal} />}
       
     <div className="container">
-      {/* Navigation */}
-      <nav className="navigation">
-        <div className="logo">SEVENS</div>
-        <div className="nav-links">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/men" className="nav-link">Men</Link>
-          <Link to="/women" className="nav-link">Women</Link>
-          <Link to="/brands" className="nav-link">Brands</Link>
-          <Link to="/collections" className="nav-link">Collections</Link>
-          <Link to="/stories" className="nav-link">Stories</Link>
-        </div>
-        <div className="nav-icons">
-          <Search className="icon" size={20} />
-          <User className="icon" size={20} onClick={handleAuthModal} />
-          <ShoppingBag className="icon" size={20} />
-        </div>
-      </nav>
-
+     
         {/* Hero Section */}
 <div className="heros-section">
   <div className="heros-content">

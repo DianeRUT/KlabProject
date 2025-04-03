@@ -1,0 +1,241 @@
+.payment-page {
+    padding: 40px 20px;
+  }
+  
+  .payment-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .payment-page h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 30px;
+  }
+  
+  .payment-content {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 30px;
+  }
+  
+  .payment-form {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+  }
+  
+  .payment-form h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .payment-methods {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .payment-method {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .payment-method.active {
+    border-color: #007bff;
+    background-color: #f0f7ff;
+  }
+  
+  .payment-method input {
+    display: none;
+  }
+  
+  .payment-method i {
+    font-size: 24px;
+    color: #333;
+  }
+  
+  .payment-method span {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .credit-card-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .form-group label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .form-group input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+  }
+  
+  .form-group input.error {
+    border-color: #dc3545;
+  }
+  
+  .error-message {
+    font-size: 12px;
+    color: #dc3545;
+  }
+  
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+  
+  .place-order-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .place-order-btn:hover:not(:disabled) {
+    background-color: #0069d9;
+  }
+  
+  .place-order-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+  
+  .place-order-btn.paypal {
+    background-color: #0070ba;
+  }
+  
+  .place-order-btn.paypal:hover:not(:disabled) {
+    background-color: #005ea6;
+  }
+  
+  .place-order-btn.apple-pay {
+    background-color: #000;
+  }
+  
+  .place-order-btn.apple-pay:hover:not(:disabled) {
+    background-color: #333;
+  }
+  
+  .alternative-payment {
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+  .alternative-payment p {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .order-details {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    height: fit-content;
+  }
+  
+  .order-details h2 {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+  }
+  
+  .shipping-info {
+    margin-bottom: 30px;
+  }
+  
+  .shipping-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  
+  .shipping-info p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  
+  .order-summary h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+  
+  .summary-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .summary-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  
+  .summary-totals {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+  }
+  
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  .summary-row.total {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  @media (max-width: 768px) {
+    .payment-content {
+      grid-template-columns: 1fr;
+    }
+  
+    .payment-methods {
+      flex-direction: column;
+    }
+  }
+  
+  

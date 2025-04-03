@@ -1,148 +1,152 @@
-/* Footer.css */
+.footer {
+  background-color: #f8f9fa;
+  padding-top: 60px;
+  margin-top: 60px;
+}
 
 .footer-container {
-    background-color: #f0f0f0; 
-    padding: 40px 20px;
-    font-family: sans-serif;
-    color: #333;
-    position: relative; 
-  }
-  
-  .newsletter-section {
-    background-color: #000; 
-    color: #fff;
-    padding: 20px 10px;
-    text-align: center;
-    margin-bottom: 30px;
-    position: absolute; 
-    border-radius: 25px;
-    top: -50px; /* Adjust this value to control the overlay amount */
-   
-    right: 80px;
-    width: 90%;
-  }
-  
-  .newsletter-text {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-left: -900px;
-    
-  }
-  
-  .newsletter-form {
-    display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 40px;
+}
+
+.footer-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.footer-description {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-links a {
+  font-size: 14px;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #007bff;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-link {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #495057;
+  transition: all 0.3s ease;
+}
+
+.social-link:hover {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.newsletter {
+  margin-top: 10px;
+}
+
+.newsletter h4 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 10px;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+}
+
+.newsletter-form button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background-color: #0069d9;
+}
+
+.footer-bottom {
+  margin-top: 40px;
+  padding: 20px 0;
+  border-top: 1px solid #dee2e6;
+}
+
+.footer-bottom .footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.footer-bottom-links {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-bottom-links a {
+  font-size: 14px;
+  color: #6c757d;
+  transition: color 0.3s ease;
+}
+
+.footer-bottom-links a:hover {
+  color: #007bff;
+}
+
+@media (max-width: 768px) {
+  .footer-bottom .footer-container {
     flex-direction: column;
-    align-items: center;
+    gap: 15px;
+    text-align: center;
   }
-  
-  .email-input {
-    width: 100%;
-    max-width: 400px;
-    margin-top: -50px;  
-    margin-right: -500px;
-    
-        display: flex;
-        flex-direction: column; /* Stack input and button vertically */
-        align-items: center;
-        gap: 15px; /* Space between input and button */
-     
-  }
-  
-  .email-input input {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1em;
-  }
-  
-  .subscribe-button {
-    background-color: #fff;
-    color: #000;
-    border: none;
-    padding: 15px 20px;
-    border-radius: 5px;
-    font-size: 1em;
-    cursor: pointer;
-    margin-right: -500px;
-    margin-bottom: 20px;
-  }
-  
-  .footer-content {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-top: 200px; /* Increased padding-top */
-  }
-  
-  .shop-info {
-    flex: 1 1 300px;
-  }
-  
-  .shop-title {
-    font-size: 1.8em;
-    margin-bottom: 10px;
-  }
-  
-  .shop-description {
-    margin-bottom: 20px;
-  }
-  
-  .social-icons {
-    display: flex;
-  }
-  
-  .social-icon {
-    background-color: #fff;
-    color: #000;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 10px;
-    text-decoration: none;
-  }
-  
-  .social-icon i {
-    font-size: 1.2em;
-  }
-  
-  .footer-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    flex: 2 1 600px;
-  }
-  
-  .footer-column {
-    flex: 1 1 150px;
-    margin-bottom: 20px;
-  }
-  
-  .footer-column h4 {
-    font-size: 1.2em;
-    margin-bottom: 10px;
-  }
-  
-  .footer-column ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .footer-column li {
-    margin-bottom: 5px;
-  }
-  
-  .footer-column a {
-    text-decoration: none;
-    color: #333;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
-    .footer-content {
-      flex-direction: column;
-    }
-  }
+}
+

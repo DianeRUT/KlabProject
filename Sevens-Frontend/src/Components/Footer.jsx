@@ -1,84 +1,96 @@
-import React from "react";
-import "../Styles/Footer.css";
+import "../styles/Footer.css"
 
-function Footer() {
+const Footer = () => {
   return (
-    <footer className="footer-container">
-      <div className="newsletter-section">
-        <div className="newsletter-text">
-          STAY UP TO DATE ABOUT
-          <br />
-          OUR LATEST OFFERS
-        </div>
-        <div className="newsletter-form">
-          <div className="email-input">
-            <input type="email" placeholder="Enter your email address" />
-          </div>
-          <button className="subscribe-button">Subscribe to Newsletter</button>
-        </div>
-      </div>
-      <div className="footer-content">
-        <div className="shop-info">
-          <h3 className="shop-title">SEVENS</h3>
-          <p className="shop-description">
-            We have clothes that suits your style and which you're proud to wear. From women to men.
+    <footer className="footer">
+      <div className="footer-container">
+        <div className="footer-section">
+          <h3 className="footer-title">ShopNow</h3>
+          <p className="footer-description">
+            Your one-stop shop for premium products. Quality, style, and affordability all in one place.
           </p>
-          <div className="social-icons">
-            <a href="#" className="social-icon">
-              <i className="fab fa-twitter"></i> 
-            </a>
-            <a href="#" className="social-icon">
+        </div>
+
+        <div className="footer-section">
+          <h3 className="footer-title">Shop</h3>
+          <ul className="footer-links">
+            <li>
+              <a href="/">All Products</a>
+            </li>
+            <li>
+              <a href="/">Men</a>
+            </li>
+            <li>
+              <a href="/">Women</a>
+            </li>
+            <li>
+              <a href="/">Accessories</a>
+            </li>
+            <li>
+              <a href="/">New Arrivals</a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="footer-section">
+          <h3 className="footer-title">Customer Service</h3>
+          <ul className="footer-links">
+            <li>
+              <a href="/">Contact Us</a>
+            </li>
+            <li>
+              <a href="/">FAQs</a>
+            </li>
+            <li>
+              <a href="/">Shipping & Returns</a>
+            </li>
+            <li>
+              <a href="/">Size Guide</a>
+            </li>
+            <li>
+              <a href="/">Track Order</a>
+            </li>
+          </ul>
+        </div>
+
+        <div className="footer-section">
+          <h3 className="footer-title">Connect With Us</h3>
+          <div className="social-links">
+            <a href="/" className="social-link">
               <i className="fab fa-facebook-f"></i>
             </a>
-            <a href="#" className="social-icon">
+            <a href="/" className="social-link">
+              <i className="fab fa-twitter"></i>
+            </a>
+            <a href="/" className="social-link">
               <i className="fab fa-instagram"></i>
             </a>
-            <a href="#" className="social-icon">
-              <i className="fab fa-tiktok"></i>
+            <a href="/" className="social-link">
+              <i className="fab fa-pinterest"></i>
             </a>
           </div>
+          <div className="newsletter">
+            <h4>Subscribe to our newsletter</h4>
+            <div className="newsletter-form">
+              <input type="email" placeholder="Your email address" />
+              <button>Subscribe</button>
+            </div>
+          </div>
         </div>
-        <div className="footer-links">
-          <div className="footer-column">
-            <h4>COMPANY</h4>
-            <ul>
-              <li><a href="#">About</a></li>
-              <li><a href="#">Features</a></li>
-              <li><a href="#">Works</a></li>
-              <li><a href="#">Career</a></li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h4>HELP</h4>
-            <ul>
-              <li><a href="#">Customer Support</a></li>
-              <li><a href="#">Delivery Details</a></li>
-              <li><a href="#">Terms & Conditions</a></li>
-              <li><a href="#">Privacy Policy</a></li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h4>FAQ</h4>
-            <ul>
-              <li><a href="#">Account</a></li>
-              <li><a href="#">Manage Deliveries</a></li>
-              <li><a href="#">Orders</a></li>
-              <li><a href="#">Payments</a></li>
-            </ul>
-          </div>
-          <div className="footer-column">
-            <h4>RESOURCES</h4>
-            <ul>
-              <li><a href="#">Free eBooks</a></li>
-              <li><a href="#">Development Tutorial</a></li>
-              <li><a href="#">How to - Blog</a></li>
-              <li><a href="#">Youtube Playlist</a></li>
-            </ul>
+      </div>
+
+      <div className="footer-bottom">
+        <div className="footer-container">
+          <p className="copyright">© 2025 ShopNow. All rights reserved.</p>
+          <div className="footer-bottom-links">
+            <a href="/">Privacy Policy</a>
+            <a href="/">Terms of Service</a>
           </div>
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
-export default Footer;
+export default Footer
+

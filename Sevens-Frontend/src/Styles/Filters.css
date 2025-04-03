@@ -1,0 +1,59 @@
+.filters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .filters h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  
+  .filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .filter-section h3 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .filter-options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .filter-option input[type="checkbox"] {
+    cursor: pointer;
+  }
+  
+  .price-slider {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .price-slider input[type="range"] {
+    width: 100%;
+    cursor: pointer;
+  }
+  
+  .price-range-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  
+  
