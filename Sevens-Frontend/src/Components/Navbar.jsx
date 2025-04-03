@@ -1,5 +1,3 @@
-"use client"
-
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
@@ -9,18 +7,20 @@ import "../styles/Navbar.css"
 
 const Navbar = () => {
   const { totalItems } = useCart()
-  const { currentUser, logout } = useAuth()
+  const { isAuthenticated, userInfo, logout } = useAuth()
+
   const [searchExpanded, setSearchExpanded] = useState(false)
 
   const toggleSearch = () => {
     setSearchExpanded(!searchExpanded)
   }
 
+ 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <Link to="/" className="navbar-logo">
-          ShopNow
+          Sevens
         </Link>
 
         <div className="navbar-links">
@@ -46,26 +46,17 @@ const Navbar = () => {
             <SearchBar isExpanded={searchExpanded} toggleSearch={toggleSearch} />
          
 
-          {currentUser ? (
+            {isAuthenticated ? (
             <div className="user-dropdown">
-              <button className="navbar-action user">
+              <button className="navbar-action user-btn">
                 <i className="fas fa-user"></i>
-                <span className="user-name">{currentUser.name.split(" ")[0]}</span>
+                <span className="user-name">{userInfo.name.split(" ")[0]}</span>
               </button>
-              <div className="dropdown-menu">
-                <Link to="/profile" className="dropdown-item">
-                  <i className="fas fa-user-circle"></i>
-                  <span>My Profile</span>
-                </Link>
-                {currentUser.role === "admin" && (
-                  <Link to="/admin" className="dropdown-item">
-                    <i className="fas fa-user-shield"></i>
-                    <span>Admin Panel</span>
-                  </Link>
-                )}
-                <button onClick={logout} className="dropdown-item logout">
-                  <i className="fas fa-sign-out-alt"></i>
-                  <span>Logout</span>
+              <div className="dropdown-content">
+                <Link to="/profile">Profile</Link>
+                {userInfo.isAdmin && <Link to="/admin/dashboard">Admin</Link>}
+                <button onClick={logout} className="logout-btn">
+                  Logout
                 </button>
               </div>
             </div>
@@ -85,5 +76,7 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default Navbar;
+
+
 

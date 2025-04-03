@@ -1,103 +1,133 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { useCart } from "../context/CartContext"
+import { useAuth } from "../components/ProtectedRoute"
+import { getUserProfile } from "../api/userApi"
 import "../styles/CheckoutPage.css"
 
 const CheckoutPage = () => {
-  const { cart, totalPrice } = useCart()
   const navigate = useNavigate()
+  const { cartItems, subtotal, shipping, tax, total } = useCart()
+  const { isAuthenticated, userInfo } = useAuth()
 
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    city: "",
-    state: "",
-    zipCode: "",
-    country: "United States",
-  })
+  // Form states
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [email, setEmail] = useState("")
+  const [address, setAddress] = useState("")
+  const [city, setCity] = useState("")
+  const [postalCode, setPostalCode] = useState("")
+  const [country, setCountry] = useState("")
+  const [phone, setPhone] = useState("")
 
-  const [errors, setErrors] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const handleChange = (e) => {
-    const { name, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }))
+  // Load user profile data if authenticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      const fetchUserProfile = async () => {
+        try {
+          const userData = await getUserProfile()
 
-    // Clear error when field is being edited
-    if (errors[name]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: "",
-      }))
+          // Split name into first and last name
+          const nameParts = userData.name.split(" ")
+          setFirstName(nameParts[0] || "")
+          setLastName(nameParts.slice(1).join(" ") || "")
+
+          setEmail(userData.email || "")
+
+          // Set shipping address if available
+          if (userData.shippingAddress) {
+            setAddress(userData.shippingAddress.address || "")
+            setCity(userData.shippingAddress.city || "")
+            setPostalCode(userData.shippingAddress.postalCode || "")
+            setCountry(userData.shippingAddress.country || "")
+            setPhone(userData.shippingAddress.phone || "")
+          }
+        } catch (err) {
+          console.error("Error fetching user profile:", err)
+        }
+      }
+
+      fetchUserProfile()
     }
-  }
+  }, [isAuthenticated])
 
-  const validateForm = () => {
-    const newErrors = {}
-
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required"
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required"
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required"
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid"
+  // Check if cart is empty
+  useEffect(() => {
+    if (cartItems.length === 0) {
+      navigate("/cart")
     }
-    if (!formData.phone.trim()) newErrors.phone = "Phone number is required"
-    if (!formData.address.trim()) newErrors.address = "Address is required"
-    if (!formData.city.trim()) newErrors.city = "City is required"
-    if (!formData.state.trim()) newErrors.state = "State is required"
-    if (!formData.zipCode.trim()) newErrors.zipCode = "ZIP code is required"
-
-    setErrors(newErrors)
-    return Object.keys(newErrors).length === 0
-  }
+  }, [cartItems, navigate])
 
   const handleSubmit = (e) => {
     e.preventDefault()
 
-    if (validateForm()) {
-      // Save shipping info to localStorage or context
-      localStorage.setItem("shippingInfo", JSON.stringify(formData))
-
-      // Navigate to payment page
-      navigate("/payment")
+    // Save shipping info to localStorage
+    const shippingInfo = {
+      firstName,
+      lastName,
+      email,
+      address,
+      city,
+      postalCode,
+      country,
+      phone,
     }
+
+    localStorage.setItem("shippingInfo", JSON.stringify(shippingInfo))
+
+    // Navigate to payment page
+    navigate("/payment")
   }
 
-  if (cart.length === 0) {
-    navigate("/")
-    return null
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading checkout...</p>
+      </div>
+    )
   }
 
   return (
     <div className="checkout-page">
       <div className="checkout-container">
-        <h1>Checkout</h1>
+        <div className="checkout-steps">
+          <div className="step active">
+            <div className="step-number">1</div>
+            <div className="step-title">Shipping</div>
+          </div>
+          <div className="step">
+            <div className="step-number">2</div>
+            <div className="step-title">Payment</div>
+          </div>
+          <div className="step">
+            <div className="step-number">3</div>
+            <div className="step-title">Confirmation</div>
+          </div>
+        </div>
 
         <div className="checkout-content">
-          <div className="shipping-form">
+          <div className="shipping-form-container">
             <h2>Shipping Information</h2>
 
-            <form onSubmit={handleSubmit}>
+            {error && <div className="error-message">{error}</div>}
+
+            <form onSubmit={handleSubmit} className="shipping-form">
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="firstName">First Name</label>
                   <input
                     type="text"
                     id="firstName"
-                    name="firstName"
-                    value={formData.firstName}
-                    onChange={handleChange}
-                    className={errors.firstName ? "error" : ""}
+                    value={firstName}
+                    onChange={(e) => setFirstName(e.target.value)}
+                    required
                   />
-                  {errors.firstName && <span className="error-message">{errors.firstName}</span>}
                 </div>
 
                 <div className="form-group">
@@ -105,155 +135,105 @@ const CheckoutPage = () => {
                   <input
                     type="text"
                     id="lastName"
-                    name="lastName"
-                    value={formData.lastName}
-                    onChange={handleChange}
-                    className={errors.lastName ? "error" : ""}
+                    value={lastName}
+                    onChange={(e) => setLastName(e.target.value)}
+                    required
                   />
-                  {errors.lastName && <span className="error-message">{errors.lastName}</span>}
-                </div>
-              </div>
-
-              <div className="form-row">
-                <div className="form-group">
-                  <label htmlFor="email">Email</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className={errors.email ? "error" : ""}
-                  />
-                  {errors.email && <span className="error-message">{errors.email}</span>}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="phone">Phone</label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className={errors.phone ? "error" : ""}
-                  />
-                  {errors.phone && <span className="error-message">{errors.phone}</span>}
                 </div>
               </div>
 
               <div className="form-group">
+                <label htmlFor="email">Email</label>
+                <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+              </div>
+
+              <div className="form-group">
                 <label htmlFor="address">Address</label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  value={formData.address}
-                  onChange={handleChange}
-                  className={errors.address ? "error" : ""}
-                />
-                {errors.address && <span className="error-message">{errors.address}</span>}
+                <input type="text" id="address" value={address} onChange={(e) => setAddress(e.target.value)} required />
               </div>
 
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="city">City</label>
-                  <input
-                    type="text"
-                    id="city"
-                    name="city"
-                    value={formData.city}
-                    onChange={handleChange}
-                    className={errors.city ? "error" : ""}
-                  />
-                  {errors.city && <span className="error-message">{errors.city}</span>}
+                  <input type="text" id="city" value={city} onChange={(e) => setCity(e.target.value)} required />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="state">State</label>
+                  <label htmlFor="postalCode">Postal Code</label>
                   <input
                     type="text"
-                    id="state"
-                    name="state"
-                    value={formData.state}
-                    onChange={handleChange}
-                    className={errors.state ? "error" : ""}
+                    id="postalCode"
+                    value={postalCode}
+                    onChange={(e) => setPostalCode(e.target.value)}
+                    required
                   />
-                  {errors.state && <span className="error-message">{errors.state}</span>}
+                </div>
+              </div>
+
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="country">Country</label>
+                  <input
+                    type="text"
+                    id="country"
+                    value={country}
+                    onChange={(e) => setCountry(e.target.value)}
+                    required
+                  />
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="zipCode">ZIP Code</label>
-                  <input
-                    type="text"
-                    id="zipCode"
-                    name="zipCode"
-                    value={formData.zipCode}
-                    onChange={handleChange}
-                    className={errors.zipCode ? "error" : ""}
-                  />
-                  {errors.zipCode && <span className="error-message">{errors.zipCode}</span>}
+                  <label htmlFor="phone">Phone</label>
+                  <input type="tel" id="phone" value={phone} onChange={(e) => setPhone(e.target.value)} required />
                 </div>
               </div>
 
-              <div className="form-group">
-                <label htmlFor="country">Country</label>
-                <select id="country" name="country" value={formData.country} onChange={handleChange}>
-                  <option value="United States">United States</option>
-                  <option value="Canada">Canada</option>
-                  <option value="United Kingdom">United Kingdom</option>
-                  <option value="Australia">Australia</option>
-                  <option value="Germany">Germany</option>
-                  <option value="France">France</option>
-                </select>
+              <div className="form-actions">
+                <button type="button" className="back-btn" onClick={() => navigate("/cart")}>
+                  Back to Cart
+                </button>
+                <button type="submit" className="continue-btn">
+                  Continue to Payment
+                </button>
               </div>
-
-              <button type="submit" className="continue-btn">
-                Continue to Payment
-              </button>
             </form>
           </div>
 
           <div className="order-summary">
             <h2>Order Summary</h2>
 
-            <div className="summary-items">
-              {cart.map((item) => (
-                <div key={item.id} className="summary-item">
+            <div className="cart-items">
+              {cartItems.map((item) => (
+                <div key={item._id} className="cart-item">
                   <div className="item-image">
                     <img src={item.image || "/placeholder.svg"} alt={item.name} />
-                    <span className="item-quantity">{item.quantity}</span>
                   </div>
-
                   <div className="item-details">
-                    <h4 className="item-name">{item.name}</h4>
-                    <p className="item-brand">{item.brand}</p>
+                    <div className="item-name">{item.name}</div>
+                    <div className="item-price">
+                      {item.quantity} x ${item.price.toFixed(2)}
+                    </div>
                   </div>
-
-                  <div className="item-price">${(item.price * item.quantity).toFixed(2)}</div>
                 </div>
               ))}
             </div>
 
-            <div className="summary-totals">
-              <div className="summary-row">
-                <span>Subtotal</span>
-                <span>${totalPrice.toFixed(2)}</span>
+            <div className="order-totals">
+              <div className="total-row">
+                <span>Subtotal:</span>
+                <span>${subtotal.toFixed(2)}</span>
               </div>
-
-              <div className="summary-row">
-                <span>Shipping</span>
-                <span>Free</span>
+              <div className="total-row">
+                <span>Shipping:</span>
+                <span>${shipping.toFixed(2)}</span>
               </div>
-
-              <div className="summary-row">
-                <span>Tax</span>
-                <span>${(totalPrice * 0.1).toFixed(2)}</span>
+              <div className="total-row">
+                <span>Tax:</span>
+                <span>${tax.toFixed(2)}</span>
               </div>
-
-              <div className="summary-row total">
-                <span>Total</span>
-                <span>${(totalPrice + totalPrice * 0.1).toFixed(2)}</span>
+              <div className="total-row total">
+                <span>Total:</span>
+                <span>${total.toFixed(2)}</span>
               </div>
             </div>
           </div>

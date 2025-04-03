@@ -1,89 +1,162 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { useSearchParams, Link } from "react-router-dom"
-import { products } from "../Data/products" 
-import ProductCard from "../Components/ProductCard"
+import { useSearchParams } from "react-router-dom"
+import { searchProducts } from "../api/searchApi"
+import ProductCard from "../components/ProductCard"
 import "../styles/SearchResultsPage.css"
 
 const SearchResultsPage = () => {
   const [searchParams] = useSearchParams()
   const query = searchParams.get("q") || ""
-  const [results, setResults] = useState([])
+  const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
+
+  // Filter states
+  const [priceRange, setPriceRange] = useState([0, 1000])
+  const [selectedCategories, setSelectedCategories] = useState([])
+  const [sortBy, setSortBy] = useState("relevance")
 
   useEffect(() => {
-    // Simulate search delay
-    setLoading(true)
+    const fetchSearchResults = async () => {
+      if (!query) return
 
-    const timer = setTimeout(() => {
-      if (query) {
-        // Search in product name, brand, and category
-        const searchResults = products.filter(
-          (product) =>
-            product.name.toLowerCase().includes(query.toLowerCase()) ||
-            product.brand.toLowerCase().includes(query.toLowerCase()) ||
-            product.category.toLowerCase().includes(query.toLowerCase()),
-        )
+      setLoading(true)
+      try {
+        const filters = {
+          minPrice: priceRange[0],
+          maxPrice: priceRange[1],
+          categories: selectedCategories.length > 0 ? selectedCategories.join(",") : undefined,
+          sort: sortBy,
+        }
 
-        setResults(searchResults)
-      } else {
-        setResults([])
+        const data = await searchProducts(query, filters)
+        setProducts(data)
+      } catch (err) {
+        setError("Failed to load search results")
+        console.error(err)
+      } finally {
+        setLoading(false)
       }
+    }
 
-      setLoading(false)
-    }, 500)
+    fetchSearchResults()
+  }, [query, priceRange, selectedCategories, sortBy])
 
-    return () => clearTimeout(timer)
-  }, [query])
+  const handleCategoryChange = (category) => {
+    setSelectedCategories((prev) => {
+      if (prev.includes(category)) {
+        return prev.filter((c) => c !== category)
+      } else {
+        return [...prev, category]
+      }
+    })
+  }
+
+  const handlePriceChange = (e, index) => {
+    const newRange = [...priceRange]
+    newRange[index] = Number(e.target.value)
+    setPriceRange(newRange)
+  }
+
+  if (loading) {
+    return (
+      <div className="search-results-loading">
+        <div className="loading-spinner"></div>
+        <p>Searching for "{query}"...</p>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="search-results-error">
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()} className="retry-btn">
+          Try Again
+        </button>
+      </div>
+    )
+  }
 
   return (
     <div className="search-results-page">
-      <div className="container">
-        <div className="search-header">
-          <h1>Search Results</h1>
-          <p>
-            {loading
-              ? "Searching..."
-              : results.length > 0
-                ? `Found ${results.length} results for "${query}"`
-                : `No results found for "${query}"`}
-          </p>
-        </div>
+      <div className="search-header">
+        <h1>Search Results for "{query}"</h1>
+        <p>{products.length} products found</p>
+      </div>
 
-        {loading ? (
-          <div className="loading-state">
-            <div className="spinner"></div>
-            <p>Searching for products...</p>
+      <div className="search-container">
+        <div className="search-filters">
+          <div className="filter-section">
+            <h3>Price Range</h3>
+            <div className="price-inputs">
+              <input
+                type="number"
+                value={priceRange[0]}
+                onChange={(e) => handlePriceChange(e, 0)}
+                min="0"
+                max={priceRange[1]}
+              />
+              <span>to</span>
+              <input
+                type="number"
+                value={priceRange[1]}
+                onChange={(e) => handlePriceChange(e, 1)}
+                min={priceRange[0]}
+              />
+            </div>
+            <div className="price-slider">
+              <input type="range" min="0" max="1000" value={priceRange[0]} onChange={(e) => handlePriceChange(e, 0)} />
+              <input type="range" min="0" max="1000" value={priceRange[1]} onChange={(e) => handlePriceChange(e, 1)} />
+            </div>
           </div>
-        ) : results.length > 0 ? (
-          <div className="search-results">
-            <div className="products-grid">
-              {results.map((product) => (
-                <ProductCard key={product.id} product={product} />
+
+          <div className="filter-section">
+            <h3>Categories</h3>
+            <div className="category-checkboxes">
+              {["Electronics", "Clothing", "Home", "Books", "Sports"].map((category) => (
+                <label key={category} className="category-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(category)}
+                    onChange={() => handleCategoryChange(category)}
+                  />
+                  {category}
+                </label>
               ))}
             </div>
           </div>
-        ) : (
-          <div className="no-results">
-            <div className="no-results-icon">
-              <i className="fas fa-search"></i>
-            </div>
-            <h2>No results found</h2>
-            <p>We couldn't find any products matching your search.</p>
-            <div className="no-results-suggestions">
-              <h3>Suggestions:</h3>
-              <ul>
-                <li>Check the spelling of your search term</li>
-                <li>Try using more general keywords</li>
-                <li>Try searching for a related product</li>
-              </ul>
-            </div>
-            <Link to="/products" className="browse-products-btn">
-              Browse All Products
-            </Link>
+        </div>
+
+        <div className="search-results">
+          <div className="search-sort">
+            <label>
+              Sort by:
+              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+                <option value="relevance">Relevance</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="newest">Newest First</option>
+                <option value="rating">Customer Rating</option>
+              </select>
+            </label>
           </div>
-        )}
+
+          {products.length === 0 ? (
+            <div className="no-results">
+              <p>No products found for "{query}"</p>
+              <p>Try adjusting your search or filters</p>
+            </div>
+          ) : (
+            <div className="products-grid">
+              {products.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )

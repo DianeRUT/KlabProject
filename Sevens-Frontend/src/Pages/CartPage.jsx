@@ -5,7 +5,8 @@ import { useCart } from "../context/CartContext.jsx" ;
 import "../styles/CartPage.css"
 
 const CartPage = () => {
-  const { cart, totalPrice, removeFromCart, updateQuantity } = useCart()
+  const { cartItems: cart, total: totalPrice, removeFromCart, updateQuantity } = useCart();
+
 
   if (cart.length === 0) {
     return (

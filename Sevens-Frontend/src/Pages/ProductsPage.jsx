@@ -1,131 +1,186 @@
-"use client"
-
-import { useState, useEffect } from "react"
-import { products } from "../Data/products"
-import ProductCard from "../Components/ProductCard"
-import Filters from "../Components/Filters"
-import Pagination from "../Components/Pagination"
-import "../styles/ProductsPage.css"
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { products as demoProducts } from "../Data/products";
+import ProductCard from "../components/ProductCard";
+import { getProducts } from "../api/productApi";
+import { getCategories } from "../api/categoryApi";
+// Import demo products
+import "../styles/ProductsPage.css";
 
 const ProductsPage = () => {
-  const [filteredProducts, setFilteredProducts] = useState(products)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [sortBy, setSortBy] = useState("newest")
-  const [filters, setFilters] = useState({
-    category: [],
-    type: [],
-    brand: [],
-    priceRange: [0, 1000],
-  })
+  const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const productsPerPage = 3
+  // Filter states
+  const [selectedCategories, setSelectedCategories] = useState([]);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+  const [sortBy, setSortBy] = useState("featured");
 
-  // Apply filters and sorting
+  const location = useLocation();
+
   useEffect(() => {
-    let result = [...products]
+    const queryParams = new URLSearchParams(location.search);
+    const categoryParam = queryParams.get("category");
 
-    // Apply category filter
-    if (filters.category.length > 0) {
-      result = result.filter((product) => filters.category.some((cat) => product.gender.includes(cat)))
+    if (categoryParam) {
+      setSelectedCategories([categoryParam]);
     }
 
-    // Apply type filter
-    if (filters.type.length > 0) {
-      result = result.filter((product) => filters.type.includes(product.type))
-    }
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        // Fetch categories
+        const categoriesData = await getCategories();
+        setCategories(categoriesData);
 
-    // Apply brand filter
-    if (filters.brand.length > 0) {
-      result = result.filter((product) => filters.brand.includes(product.brand))
-    }
+        // Prepare filter parameters
+        const filters = {
+          minPrice: priceRange[0],
+          maxPrice: priceRange[1],
+          sort: sortBy,
+        };
 
-    // Apply price range filter
-    result = result.filter(
-      (product) => product.price >= filters.priceRange[0] && product.price <= filters.priceRange[1],
-    )
-
-    // Apply sorting
-    if (sortBy === "newest") {
-      // For demo purposes, we'll just keep the original order
-    } else if (sortBy === "price-low-high") {
-      result.sort((a, b) => a.price - b.price)
-    } else if (sortBy === "price-high-low") {
-      result.sort((a, b) => b.price - a.price)
-    } else if (sortBy === "rating") {
-      result.sort((a, b) => b.rating - a.rating)
-    }
-
-    setFilteredProducts(result)
-    setCurrentPage(1) // Reset to first page when filters change
-  }, [filters, sortBy])
-
-  // Get current products for pagination
-  const indexOfLastProduct = currentPage * productsPerPage
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct)
-
-  const totalPages = Math.ceil(filteredProducts.length / productsPerPage)
-
-  const handleFilterChange = (filterType, value) => {
-    setFilters((prev) => {
-      const newFilters = { ...prev }
-
-      if (filterType === "priceRange") {
-        newFilters.priceRange = value
-      } else {
-        // Toggle the filter value
-        if (newFilters[filterType].includes(value)) {
-          newFilters[filterType] = newFilters[filterType].filter((item) => item !== value)
-        } else {
-          newFilters[filterType] = [...newFilters[filterType], value]
+        if (selectedCategories.length > 0) {
+          filters.categories = selectedCategories.join(",");
         }
-      }
 
-      return newFilters
-    })
+        // Fetch products from the backend
+        const productsData = await getProducts(filters);
+        console.log("Fetched Products:", productsData); // 🔍 Debugging
+
+        if (Array.isArray(productsData) && productsData.length > 0) {
+          setProducts(productsData);
+        } else {
+          setProducts(demoProducts); // Use demo data if backend returns empty
+        }
+      } catch (err) {
+        console.error("Error fetching data:", err);
+        setError("Failed to load products. Please try again.");
+        setProducts(demoProducts); // Use demo data in case of error
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [location.search, selectedCategories, priceRange, sortBy]);
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategories((prev) =>
+      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
+    );
+  };
+
+  const handlePriceChange = (e, index) => {
+    const newRange = [...priceRange];
+    newRange[index] = Number(e.target.value);
+    setPriceRange(newRange);
+  };
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+  };
+
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="loading-spinner"></div>
+        <p>Loading products...</p>
+      </div>
+    );
+  }
+
+  if (error && products.length === 0) {
+    return (
+      <div className="error-container">
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()} className="retry-btn">
+          Try Again
+        </button>
+      </div>
+    );
   }
 
   return (
     <div className="products-page">
+      <h1 className="page-title">All Products</h1>
+
       <div className="products-container">
-        <div className="filters-column">
-          <Filters filters={filters} onFilterChange={handleFilterChange} />
+        <div className="filters-sidebar">
+          <div className="filter-section">
+            <h3>Categories</h3>
+            <div className="category-filters">
+              {categories.map((category) => (
+                <label key={category._id} className="category-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={selectedCategories.includes(category.name.toLowerCase())}
+                    onChange={() => handleCategoryChange(category.name.toLowerCase())}
+                  />
+                  {category.name}
+                </label>
+              ))}
+            </div>
+          </div>
+
+          <div className="filter-section">
+            <h3>Price Range</h3>
+            <div className="price-inputs">
+              <input
+                type="number"
+                value={priceRange[0]}
+                onChange={(e) => handlePriceChange(e, 0)}
+                min="0"
+                max={priceRange[1]}
+              />
+              <span>to</span>
+              <input
+                type="number"
+                value={priceRange[1]}
+                onChange={(e) => handlePriceChange(e, 1)}
+                min={priceRange[0]}
+              />
+            </div>
+            <div className="price-slider">
+              <input type="range" min="0" max="1000" value={priceRange[0]} onChange={(e) => handlePriceChange(e, 0)} />
+              <input type="range" min="0" max="1000" value={priceRange[1]} onChange={(e) => handlePriceChange(e, 1)} />
+            </div>
+          </div>
         </div>
 
-        <div className="products-column">
+        <div className="products-content">
           <div className="products-header">
-            <div className="sort-by">
-              <span>Sort by:</span>
-              <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-                <option value="newest">Newest</option>
-                <option value="price-low-high">Price: Low to High</option>
-                <option value="price-high-low">Price: High to Low</option>
-                <option value="rating">Rating</option>
+            <p className="products-count">{products.length} products</p>
+            <div className="sort-dropdown">
+              <label htmlFor="sort">Sort by:</label>
+              <select id="sort" value={sortBy} onChange={handleSortChange}>
+                <option value="featured">Featured</option>
+                <option value="price_asc">Price: Low to High</option>
+                <option value="price_desc">Price: High to Low</option>
+                <option value="newest">Newest First</option>
+                <option value="rating">Top Rated</option>
               </select>
             </div>
+          </div>
 
-            <div className="view-options">
-              <button className="view-option active">
-                <i className="fas fa-th-large"></i>
-              </button>
-              <button className="view-option">
-                <i className="fas fa-list"></i>
-              </button>
+          {Array.isArray(products) && products.length > 0 ? (
+            <div className="products-grid">
+              {products.map((product) => (
+                <ProductCard key={product._id} product={product} />
+              ))}
             </div>
-          </div>
-
-          <div className="products-grid">
-            {currentProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
+          ) : (
+            <div className="no-products">
+              <p>No products found matching your criteria.</p>
+              <p>Try adjusting your filters or browse our categories.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProductsPage
-
+export default ProductsPage;

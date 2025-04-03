@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-section">
-          <h3 className="footer-title">ShopNow</h3>
+          <h3 className="footer-title">Sevens</h3>
           <p className="footer-description">
             Your one-stop shop for premium products. Quality, style, and affordability all in one place.
           </p>
@@ -81,7 +81,7 @@ const Footer = () => {
 
       <div className="footer-bottom">
         <div className="footer-container">
-          <p className="copyright">© 2025 ShopNow. All rights reserved.</p>
+          <p className="copyright">© 2025 Sevens. All rights reserved.</p>
           <div className="footer-bottom-links">
             <a href="/">Privacy Policy</a>
             <a href="/">Terms of Service</a>
