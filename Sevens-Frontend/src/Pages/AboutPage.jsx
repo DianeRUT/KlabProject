@@ -37,7 +37,7 @@ const AboutPage = () => {
     <div className="about-page">
       <div className="about-header">
         <div className="container">
-          <h1>About ShopNow</h1>
+          <h1>About Sevens</h1>
           <p>Discover our story, mission, and the team behind your favorite online store</p>
         </div>
       </div>
@@ -162,10 +162,10 @@ const AboutPage = () => {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div className="timeline-content">
-                <h3>2015</h3>
-                <h4>ShopNow Founded</h4>
+                <h3>2024</h3>
+                <h4>Sevens Founded</h4>
                 <p>
-                  Sarah Johnson launches ShopNow as an online boutique with a small collection of curated fashion items.
+                  Martine launches Sevens as an online boutique with a small collection of curated fashion items.
                 </p>
               </div>
             </div>
@@ -173,7 +173,7 @@ const AboutPage = () => {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div className="timeline-content">
-                <h3>2017</h3>
+                <h3>2026</h3>
                 <h4>Expansion to Accessories</h4>
                 <p>
                   We expanded our product range to include accessories, partnering with premium brands to offer a wider
@@ -185,10 +185,10 @@ const AboutPage = () => {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div className="timeline-content">
-                <h3>2019</h3>
+                <h3>2026</h3>
                 <h4>International Shipping</h4>
                 <p>
-                  ShopNow begins shipping to international customers, reaching fashion enthusiasts in over 20 countries.
+                  Sevens begins shipping to international customers, reaching fashion enthusiasts in over 20 countries.
                 </p>
               </div>
             </div>
@@ -196,7 +196,7 @@ const AboutPage = () => {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div className="timeline-content">
-                <h3>2021</h3>
+                <h3>2026</h3>
                 <h4>Mobile App Launch</h4>
                 <p>
                   We launched our mobile app, making it even easier for customers to shop on the go with exclusive
@@ -208,10 +208,10 @@ const AboutPage = () => {
             <div className="timeline-item">
               <div className="timeline-dot"></div>
               <div className="timeline-content">
-                <h3>2023</h3>
+                <h3>2025</h3>
                 <h4>Sustainability Initiative</h4>
                 <p>
-                  ShopNow commits to sustainable practices with eco-friendly packaging and a curated collection of
+                  Sevens commits to sustainable practices with eco-friendly packaging and a curated collection of
                   sustainable brands.
                 </p>
               </div>
@@ -226,7 +226,7 @@ const AboutPage = () => {
             <div className="testimonial">
               <div className="testimonial-content">
                 <p>
-                  "ShopNow has been my go-to for fashion and accessories for years. The quality is consistently
+                  "Sevens has been my go-to for fashion and accessories for years. The quality is consistently
                   excellent, and their customer service is unmatched. I always feel confident shopping here."
                 </p>
               </div>
@@ -234,7 +234,7 @@ const AboutPage = () => {
                 <img src="/images/customer-1.jpg" alt="Customer" />
                 <div>
                   <h4>Jessica T.</h4>
-                  <p>Loyal Customer since 2017</p>
+                  <p>Loyal Customer since 2025</p>
                 </div>
               </div>
             </div>
