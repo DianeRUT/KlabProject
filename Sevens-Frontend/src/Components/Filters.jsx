@@ -1,10 +1,18 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import "../styles/Filters.css"
 
 const Filters = ({ filters, onFilterChange }) => {
   const [priceRange, setPriceRange] = useState(filters.priceRange[1])
+  const [categories, setCategories] = useState(["Men", "Women", "Kids", "Sports", "Sale"])
+  const [types, setTypes] = useState(["Shoes", "Clothes", "Accessories"])
+  const [brands, setBrands] = useState(["Nike", "Jordan", "Adidas", "Puma", "Versace"])
+
+  // Update price range when filters change
+  useEffect(() => {
+    setPriceRange(filters.priceRange[1])
+  }, [filters.priceRange])
 
   const handlePriceChange = (e) => {
     const value = Number.parseInt(e.target.value)
@@ -19,89 +27,77 @@ const Filters = ({ filters, onFilterChange }) => {
       <div className="filter-section">
         <h3>Category</h3>
         <div className="filter-options">
-          <label className="filter-option">
-            <input
-              type="checkbox"
-              checked={filters.category.includes("Men")}
-              onChange={() => onFilterChange("category", "Men")}
-            />
-            Men
-          </label>
-          <label className="filter-option">
-            <input
-              type="checkbox"
-              checked={filters.category.includes("Women")}
-              onChange={() => onFilterChange("category", "Women")}
-            />
-            Women
-          </label>
-          <label className="filter-option">
-            <input
-              type="checkbox"
-              checked={filters.category.includes("Sports")}
-              onChange={() => onFilterChange("category", "Sports")}
-            />
-            Sports
-          </label>
+          {categories.map((category) => (
+            <label key={category} className="filter-option">
+              <input
+                type="checkbox"
+                checked={filters.category.includes(category)}
+                onChange={() => onFilterChange("category", category)}
+              />
+              {category}
+            </label>
+          ))}
         </div>
       </div>
 
       <div className="filter-section">
         <h3>Type</h3>
         <div className="filter-options">
-          <label className="filter-option">
-            <input
-              type="checkbox"
-              checked={filters.type.includes("Shoes")}
-              onChange={() => onFilterChange("type", "Shoes")}
-            />
-            Shoes
-          </label>
-          <label className="filter-option">
-            <input
-              type="checkbox"
-              checked={filters.type.includes("Accessories")}
-              onChange={() => onFilterChange("type", "Accessories")}
-            />
-            Accessories
-          </label>
-          <label className="filter-option">
-            <input
-              type="checkbox"
-              checked={filters.type.includes("Clothes")}
-              onChange={() => onFilterChange("type", "Clothes")}
-            />
-            Clothes
-          </label>
+          {types.map((type) => (
+            <label key={type} className="filter-option">
+              <input
+                type="checkbox"
+                checked={filters.type.includes(type)}
+                onChange={() => onFilterChange("type", type)}
+              />
+              {type}
+            </label>
+          ))}
         </div>
       </div>
 
       <div className="filter-section">
         <h3>Brand</h3>
         <div className="filter-options">
+          {brands.map((brand) => (
+            <label key={brand} className="filter-option">
+              <input
+                type="checkbox"
+                checked={filters.brand.includes(brand)}
+                onChange={() => onFilterChange("brand", brand)}
+              />
+              {brand}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div className="filter-section">
+        <h3>Gender</h3>
+        <div className="filter-options">
           <label className="filter-option">
             <input
               type="checkbox"
-              checked={filters.brand.includes("Nike")}
-              onChange={() => onFilterChange("brand", "Nike")}
+              checked={filters.gender.includes("Men")}
+              onChange={() => onFilterChange("gender", "Men")}
             />
-            Nike
+            Men
           </label>
           <label className="filter-option">
             <input
               type="checkbox"
-              checked={filters.brand.includes("Jordan")}
-              onChange={() => onFilterChange("brand", "Jordan")}
+              checked={filters.gender.includes("Women")}
+              onChange={() => onFilterChange("gender", "Women")}
             />
-            Jordan
+            Women
           </label>
           <label className="filter-option">
             <input
               type="checkbox"
-              checked={filters.brand.includes("Versace")}
-              onChange={() => onFilterChange("brand", "Versace")}
+              checked={filters.gender.includes("Unisex")}
+              onChange={() => onFilterChange("gender", "Unisex")}
             />
-            Versace
+            Unisex
           </label>
         </div>
       </div>
@@ -116,6 +112,22 @@ const Filters = ({ filters, onFilterChange }) => {
           </div>
         </div>
       </div>
+
+      <button
+        className="clear-filters-btn"
+        onClick={() => {
+          // Reset all filters
+          onFilterChange("reset", {
+            category: [],
+            brand: [],
+            type: [],
+            priceRange: [0, 1000],
+            gender: [],
+          })
+        }}
+      >
+        Clear All Filters
+      </button>
     </div>
   )
 }

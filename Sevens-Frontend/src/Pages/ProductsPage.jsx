@@ -1,186 +1,231 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import { products as demoProducts } from "../Data/products";
-import ProductCard from "../components/ProductCard";
-import { getProducts } from "../api/productApi";
-import { getCategories } from "../api/categoryApi";
-// Import demo products
-import "../styles/ProductsPage.css";
+
+import { useState, useEffect } from "react"
+import { useSearchParams } from "react-router-dom"
+import ProductCard from "../components/ProductCard"
+import Filters from "../components/Filters"
+import Pagination from "../components/Pagination"
+import { getProducts } from "../api/productApi"
+import { getCategories } from "../api/categoryApi"
+import "../styles/ProductsPage.css"
 
 const ProductsPage = () => {
-  const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [searchParams] = useSearchParams()
+  const initialCategory = searchParams.get("category") || ""
 
-  // Filter states
-  const [selectedCategories, setSelectedCategories] = useState([]);
-  const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [sortBy, setSortBy] = useState("featured");
+  const [products, setProducts] = useState([])
+  const [categories, setCategories] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
-  const location = useLocation();
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+
+  // Filter state
+  const [filters, setFilters] = useState({
+    category: initialCategory ? [initialCategory] : [],
+    brand: [],
+    type: [],
+    priceRange: [0, 1000],
+    gender: [],
+  })
+
+  // Sort state
+  const [sortBy, setSortBy] = useState("newest")
+
+  // View state (grid or list)
+  const [viewMode, setViewMode] = useState("grid")
 
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const categoryParam = queryParams.get("category");
-
-    if (categoryParam) {
-      setSelectedCategories([categoryParam]);
-    }
-
-    const fetchData = async () => {
-      setLoading(true);
+    // Fetch categories for filter options
+    const fetchCategories = async () => {
       try {
-        // Fetch categories
-        const categoriesData = await getCategories();
-        setCategories(categoriesData);
-
-        // Prepare filter parameters
-        const filters = {
-          minPrice: priceRange[0],
-          maxPrice: priceRange[1],
-          sort: sortBy,
-        };
-
-        if (selectedCategories.length > 0) {
-          filters.categories = selectedCategories.join(",");
-        }
-
-        // Fetch products from the backend
-        const productsData = await getProducts(filters);
-        console.log("Fetched Products:", productsData); // 🔍 Debugging
-
-        if (Array.isArray(productsData) && productsData.length > 0) {
-          setProducts(productsData);
-        } else {
-          setProducts(demoProducts); // Use demo data if backend returns empty
+        const data = await getCategories()
+        if (Array.isArray(data)) {
+          setCategories(data)
         }
       } catch (err) {
-        console.error("Error fetching data:", err);
-        setError("Failed to load products. Please try again.");
-        setProducts(demoProducts); // Use demo data in case of error
-      } finally {
-        setLoading(false);
+        console.error("Error fetching categories:", err)
       }
-    };
+    }
 
-    fetchData();
-  }, [location.search, selectedCategories, priceRange, sortBy]);
+    fetchCategories()
+  }, [])
 
-  const handleCategoryChange = (category) => {
-    setSelectedCategories((prev) =>
-      prev.includes(category) ? prev.filter((c) => c !== category) : [...prev, category]
-    );
-  };
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true)
+        setError(null)
 
-  const handlePriceChange = (e, index) => {
-    const newRange = [...priceRange];
-    newRange[index] = Number(e.target.value);
-    setPriceRange(newRange);
-  };
+        console.log("Fetching products with filters:", filters)
+
+        // Convert filters to API parameters
+        const params = {
+          page: currentPage,
+          sort: sortBy,
+          minPrice: filters.priceRange[0],
+          maxPrice: filters.priceRange[1],
+        }
+
+        // Add category filter if selected
+        if (filters.category.length > 0) {
+          params.category = filters.category.join(",")
+        }
+
+        // Add brand filter if selected
+        if (filters.brand.length > 0) {
+          params.brand = filters.brand.join(",")
+        }
+
+        // Add type filter if selected
+        if (filters.type.length > 0) {
+          params.type = filters.type.join(",")
+        }
+
+        // Add gender filter if selected
+        if (filters.gender.length > 0) {
+          params.gender = filters.gender.join(",")
+        }
+
+        const data = await getProducts(params)
+        console.log("Products data received:", data)
+
+        // Handle different response structures
+        if (data && data.products && Array.isArray(data.products)) {
+          setProducts(data.products)
+          setTotalPages(data.pages || 1)
+        } else if (Array.isArray(data)) {
+          setProducts(data)
+          setTotalPages(Math.ceil(data.length / 10)) // Assuming 10 products per page
+        } else {
+          console.warn("Unexpected data structure:", data)
+          setProducts([])
+          setTotalPages(1)
+        }
+      } catch (err) {
+        console.error("Error in ProductsPage:", err)
+        setError("Failed to load products. Please try again.")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProducts()
+  }, [currentPage, sortBy, filters])
+
+  const handleFilterChange = (filterType, value) => {
+    setFilters((prevFilters) => {
+      const newFilters = { ...prevFilters }
+
+      // Handle different filter types
+      if (filterType === "priceRange") {
+        newFilters.priceRange = value
+      } else {
+        // Toggle filter value (add or remove)
+        if (Array.isArray(newFilters[filterType])) {
+          if (newFilters[filterType].includes(value)) {
+            newFilters[filterType] = newFilters[filterType].filter((item) => item !== value)
+          } else {
+            newFilters[filterType] = [...newFilters[filterType], value]
+          }
+        }
+      }
+
+      return newFilters
+    })
+
+    // Reset to first page when filters change
+    setCurrentPage(1)
+  }
 
   const handleSortChange = (e) => {
-    setSortBy(e.target.value);
-  };
+    setSortBy(e.target.value)
+    setCurrentPage(1) // Reset to first page when sort changes
+  }
 
-  if (loading) {
+  const handlePageChange = (page) => {
+    setCurrentPage(page)
+    // Scroll to top when page changes
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
+
+  const toggleViewMode = (mode) => {
+    setViewMode(mode)
+  }
+
+  if (loading && products.length === 0) {
     return (
       <div className="loading-container">
         <div className="loading-spinner"></div>
         <p>Loading products...</p>
       </div>
-    );
-  }
-
-  if (error && products.length === 0) {
-    return (
-      <div className="error-container">
-        <p>{error}</p>
-        <button onClick={() => window.location.reload()} className="retry-btn">
-          Try Again
-        </button>
-      </div>
-    );
+    )
   }
 
   return (
     <div className="products-page">
-      <h1 className="page-title">All Products</h1>
-
       <div className="products-container">
-        <div className="filters-sidebar">
-          <div className="filter-section">
-            <h3>Categories</h3>
-            <div className="category-filters">
-              {categories.map((category) => (
-                <label key={category._id} className="category-checkbox">
-                  <input
-                    type="checkbox"
-                    checked={selectedCategories.includes(category.name.toLowerCase())}
-                    onChange={() => handleCategoryChange(category.name.toLowerCase())}
-                  />
-                  {category.name}
-                </label>
-              ))}
-            </div>
-          </div>
-
-          <div className="filter-section">
-            <h3>Price Range</h3>
-            <div className="price-inputs">
-              <input
-                type="number"
-                value={priceRange[0]}
-                onChange={(e) => handlePriceChange(e, 0)}
-                min="0"
-                max={priceRange[1]}
-              />
-              <span>to</span>
-              <input
-                type="number"
-                value={priceRange[1]}
-                onChange={(e) => handlePriceChange(e, 1)}
-                min={priceRange[0]}
-              />
-            </div>
-            <div className="price-slider">
-              <input type="range" min="0" max="1000" value={priceRange[0]} onChange={(e) => handlePriceChange(e, 0)} />
-              <input type="range" min="0" max="1000" value={priceRange[1]} onChange={(e) => handlePriceChange(e, 1)} />
-            </div>
-          </div>
+        <div className="filters-column">
+          <Filters filters={filters} onFilterChange={handleFilterChange} />
         </div>
 
-        <div className="products-content">
+        <div className="products-column">
           <div className="products-header">
-            <p className="products-count">{products.length} products</p>
-            <div className="sort-dropdown">
-              <label htmlFor="sort">Sort by:</label>
-              <select id="sort" value={sortBy} onChange={handleSortChange}>
-                <option value="featured">Featured</option>
+            <div className="sort-by">
+              <span>Sort by:</span>
+              <select value={sortBy} onChange={handleSortChange}>
+                <option value="newest">Newest</option>
                 <option value="price_asc">Price: Low to High</option>
                 <option value="price_desc">Price: High to Low</option>
-                <option value="newest">Newest First</option>
                 <option value="rating">Top Rated</option>
               </select>
             </div>
+
+            <div className="view-options">
+              <button
+                className={`view-option ${viewMode === "grid" ? "active" : ""}`}
+                onClick={() => toggleViewMode("grid")}
+              >
+                <i className="fas fa-th"></i>
+              </button>
+              <button
+                className={`view-option ${viewMode === "list" ? "active" : ""}`}
+                onClick={() => toggleViewMode("list")}
+              >
+                <i className="fas fa-list"></i>
+              </button>
+            </div>
           </div>
 
-          {Array.isArray(products) && products.length > 0 ? (
-            <div className="products-grid">
-              {products.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
+          {error ? (
+            <div className="error-container">
+              <p>{error}</p>
+              <button onClick={() => window.location.reload()} className="retry-btn">
+                Try Again
+              </button>
             </div>
-          ) : (
+          ) : products.length === 0 ? (
             <div className="no-products">
               <p>No products found matching your criteria.</p>
               <p>Try adjusting your filters or browse our categories.</p>
             </div>
+          ) : (
+            <>
+              <div className={`products-${viewMode}`}>
+                {products.map((product) => (
+                  <ProductCard key={product._id || product.id} product={product} />
+                ))}
+              </div>
+
+              <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+            </>
           )}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProductsPage;
+export default ProductsPage
+

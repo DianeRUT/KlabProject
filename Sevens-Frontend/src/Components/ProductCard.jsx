@@ -1,5 +1,4 @@
-"use client"
-
+import { Link } from "react-router-dom"
 import { useState } from "react"
 import { useCart } from "../context/CartContext"
 import StarRating from "./StarRating"
@@ -7,47 +6,41 @@ import "../styles/ProductCard.css"
 
 const ProductCard = ({ product }) => {
   const { addToCart } = useCart()
-  const [isAdding, setIsAdding] = useState(false)
 
-  const handleAddToCart = () => {
-    setIsAdding(true)
-    addToCart(product)
+  // Handle missing or undefined properties
+  const productId = product?._id || product?.id || "unknown"
+  const productName = product?.name || "Product Name"
+  const productPrice = product?.price || 0
+  const productImage = product?.image || "/placeholder.svg?height=200&width=200"
+  const productRating = product?.rating || 0
+  const productNumReviews = product?.numReviews || 0
+  const productCountInStock = product?.countInStock || 0
 
-    setTimeout(() => {
-      setIsAdding(false)
-    }, 500)
+  const handleAddToCart = (e) => {
+    e.preventDefault()
+    addToCart(product, 1)
   }
 
   return (
     <div className="product-card">
-      {product.discount && <div className="product-badge discount">{product.discount}</div>}
-      {product.isNew && <div className="product-badge new">New</div>}
-
-      <div className="product-image">
-        <img src={product.image || "/placeholder.svg"} alt={product.name} />
-      </div>
-
-      <div className="product-info">
-        <h3 className="product-name">{product.name}</h3>
-        <p className="product-brand">{product.brand}</p>
-
-        <div className="product-rating">
-          <StarRating rating={product.rating} />
-          <span className="rating-value">{product.rating}</span>
+      <Link to={`/products/${productId}`} className="product-link">
+        <div className="product-image">
+          <img src={productImage || "/placeholder.svg"} alt={productName} />
         </div>
-
-        <div className="product-price">
-          <span className="current-price">${product.price.toFixed(2)}</span>
-
-          {product.originalPrice > product.price && (
-            <span className="original-price">${product.originalPrice.toFixed(2)}</span>
-          )}
+        <div className="product-info">
+          <h3 className="product-name">{productName}</h3>
+          <div className="product-price">${productPrice.toFixed(2)}</div>
+          <div className="product-rating">
+            {[...Array(5)].map((_, index) => (
+              <i key={index} className={`fas fa-star ${index < Math.floor(productRating) ? "filled" : ""}`}></i>
+            ))}
+            <span className="rating-count">({productNumReviews})</span>
+          </div>
         </div>
-
-        <button className={`add-to-cart-btn ${isAdding ? "adding" : ""}`} onClick={handleAddToCart}>
-          {isAdding ? "Adding..." : "Add to Cart"}
-        </button>
-      </div>
+      </Link>
+      <button className="add-to-cart-btn" onClick={handleAddToCart} disabled={productCountInStock === 0}>
+        {productCountInStock === 0 ? "Out of Stock" : "Add to Cart"}
+      </button>
     </div>
   )
 }

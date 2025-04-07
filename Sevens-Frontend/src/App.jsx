@@ -1,123 +1,162 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { CartProvider } from "./context/CartContext"; // Ensure correct path
-import { AuthProvider } from "./Context/AuthContext";  // Ensure correct path
-
-
 import HomePage from "./Pages/Home"
-import ProductsPage from "./pages/ProductsPage"
-import ProductDetailPage from "./Pages/ProductDetail"
-import CartPage from "./Pages/CartPage"
+import ProductsPage from "./Pages/ProductsPage"
+import ProductDetailPage from "./Pages/ProductDetail" 
+import CartPage from "./pages/CartPage"
 import CheckoutPage from "./pages/CheckoutPage"
-import PaymentPage from "./pages/PaymentPage"
+import PaymentPage from "./Pages/PaymentPage"
 import ConfirmationPage from "./pages/ConfirmationPage"
 import CategoriesPage from "./pages/CategoriesPage"
 import ContactPage from "./pages/ContactPage"
 import AboutPage from "./pages/AboutPage"
-import LoginPage from "./Pages/LoginPage"
-import RegisterPage from "./Pages/RegisterPage"
-import ProfilePage from "./Pages/ProfilePage"
-import SearchResultsPage from "./pages/SearchResultsPage"
+import LoginPage from "./pages/LoginPage"
+import RegisterPage from "./pages/RegisterPage"
+import ProfilePage from "./pages/ProfilePage"
 import MainLayout from "./Layouts/MainLayout"
+import { CartProvider } from "./context/CartContext"
+import { AuthProvider } from "./context/AuthContext"
 import ProtectedRoute from "./components/ProtectedRoute"
-import AdminRoute from "./Components/AdminRoute"
-// import AdminDashboard from "./pages/admin/AdminDashboard"
-// import AdminProducts from "./pages/admin/AdminProducts"
-// import AdminOrders from "./pages/admin/AdminOrders"
-// import AdminUsers from "./pages/admin/AdminUsers"
+
+// Admin Pages
+import DashboardPage from "./Pages/admin/DashboardPage"
+import AdminProductsPage from "./Pages/admin/ProductsPage"
+import ProductFormPage from "./Pages/admin/ProductFormPage"
+import OrdersPage from "./Pages/admin/OrdersPage"
+import OrderDetailPage from "./Pages/admin/OrderDetailPage"
+import UsersPage from "./Pages/admin/UsersPage"
+import CategoriesAdminPage from "./Pages/admin/CategoriesPage"
+import SettingsPage from "./Pages/admin/SettingsPage"
+import AdminRoute from "./components/AdminRoute"
 
 function App() {
   return (
-    <AuthProvider>
-      <CartProvider>
     <Router>
-      <Routes>
-        <Route path="/" element={<MainLayout />}>
-          {/* Public Routes */}
-          <Route index element={<HomePage />} />
-          <Route path="products" element={<ProductsPage />} />
-          <Route path="products/:id" element={<ProductDetailPage />} />
-          <Route path="categories" element={<CategoriesPage />} />
-          <Route path="about" element={<AboutPage />} />
-          <Route path="contact" element={<ContactPage />} />
-          <Route path="cart" element={<CartPage />} />
-          <Route path="search" element={<SearchResultsPage />} />
-          <Route path="login" element={<LoginPage />} />
-          <Route path="register" element={<RegisterPage />} />
+      <AuthProvider>
+        <CartProvider>
+          <Routes>
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="products" element={<ProductsPage />} />
+              <Route path="products/:id" element={<ProductDetailPage />} />
+              <Route path="categories" element={<CategoriesPage />} />
+              <Route path="about" element={<AboutPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="cart" element={<CartPage />} />
+              <Route path="login" element={<LoginPage />} />
+              <Route path="register" element={<RegisterPage />} />
 
-          {/* Protected Routes (require authentication) */}
-          <Route
-            path="checkout"
-            element={
-              <ProtectedRoute>
-                <CheckoutPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="payment"
-            element={
-              <ProtectedRoute>
-                <PaymentPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="confirmation"
-            element={
-              <ProtectedRoute>
-                <ConfirmationPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
+              {/* Protected Routes */}
+              <Route
+                path="checkout"
+                element={
+                  <ProtectedRoute>
+                    <CheckoutPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="payment"
+                element={
+                  <ProtectedRoute>
+                    <PaymentPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="confirmation"
+                element={
+                  <ProtectedRoute>
+                    <ConfirmationPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+            </Route>
 
-          {/* Admin Routes */}
-          {/* <Route path="admin">
+            {/* Admin Routes */}
             <Route
-              path="dashboard"
+              path="/admin/dashboard"
               element={
                 <AdminRoute>
-                  <AdminDashboard />
+                  <DashboardPage />
                 </AdminRoute>
               }
             />
             <Route
-              path="products"
+              path="/admin/products"
               element={
                 <AdminRoute>
-                  <AdminProducts />
+                  <AdminProductsPage />
                 </AdminRoute>
               }
             />
             <Route
-              path="orders"
+              path="/admin/products/create"
               element={
                 <AdminRoute>
-                  <AdminOrders />
+                  <ProductFormPage />
                 </AdminRoute>
               }
             />
             <Route
-              path="users"
+              path="/admin/products/edit/:id"
               element={
                 <AdminRoute>
-                  <AdminUsers />
+                  <ProductFormPage />
                 </AdminRoute>
               }
             />
-          </Route> */}
-        </Route>
-      </Routes>
+            <Route
+              path="/admin/orders"
+              element={
+                <AdminRoute>
+                  <OrdersPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/orders/:id"
+              element={
+                <AdminRoute>
+                  <OrderDetailPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/users"
+              element={
+                <AdminRoute>
+                  <UsersPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/categories"
+              element={
+                <AdminRoute>
+                  <CategoriesAdminPage />
+                </AdminRoute>
+              }
+            />
+            <Route
+              path="/admin/settings"
+              element={
+                <AdminRoute>
+                  <SettingsPage />
+                </AdminRoute>
+              }
+            />
+          </Routes>
+        </CartProvider>
+      </AuthProvider>
     </Router>
-    </CartProvider>
-    </AuthProvider>
   )
 }
 

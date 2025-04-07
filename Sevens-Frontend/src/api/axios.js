@@ -28,6 +28,8 @@ api.interceptors.response.use(
     return response
   },
   (error) => {
+    console.error("API Error:", error.response?.data || error.message)
+    
     // Handle 401 Unauthorized errors (token expired)
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token")

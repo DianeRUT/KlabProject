@@ -22,6 +22,9 @@ export const getOrderDetails = async (orderId) => {
   }
 }
 
+// Alias for getOrderDetails to maintain compatibility with admin components
+export const getOrderById = getOrderDetails
+
 // Update order to paid
 export const payOrder = async (orderId, paymentResult) => {
   try {
@@ -40,6 +43,29 @@ export const getMyOrders = async () => {
     return response.data
   } catch (error) {
     console.error("Error fetching my orders:", error)
+    throw error
+  }
+}
+
+// Get all orders (admin)
+export const getOrders = async (params = {}) => {
+  try {
+    const response = await api.get("/orders", { params })
+    return response.data
+  } catch (error) {
+    console.error("Error fetching orders:", error)
+    // Return empty array to prevent cascading failures
+    return []
+  }
+}
+
+// Update order status
+export const updateOrderStatus = async (orderId, status) => {
+  try {
+    const response = await api.put(`/orders/${orderId}/status`, { status })
+    return response.data
+  } catch (error) {
+    console.error("Error updating order status:", error)
     throw error
   }
 }
