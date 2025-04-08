@@ -1,11 +1,12 @@
-"use client"
-
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import ProductCard from "../components/ProductCard"
 import { getTopProducts, getNewProducts } from "../api/productApi"
 import { getCategories } from "../api/categoryApi"
 import "../styles/Home.css"
+import women from "../assets/Images/women12.jpg"
+import men from "../assets/Images/men2.jpg"
+import accessories from "../assets/Images/access1.jpg"
 
 const HomePage = () => {
   const [featuredProducts, setFeaturedProducts] = useState([])
@@ -96,17 +97,17 @@ const HomePage = () => {
       {
         _id: "fallback1",
         name: "Men",
-        image: "/placeholder.svg?height=300&width=300",
+        image: men,
       },
       {
         _id: "fallback2",
         name: "Women",
-        image: "/placeholder.svg?height=300&width=300",
+        image: women,
       },
       {
         _id: "fallback3",
         name: "Accessories",
-        image: "/placeholder.svg?height=300&width=300",
+        image: accessories,
       },
     ]
   }
@@ -184,7 +185,7 @@ const HomePage = () => {
                 <div className="category-image">
                   <img src={category.image || "/placeholder.svg?height=300&width=300"} alt={category.name} />
                 </div>
-                <h3 className="category-name">{category.name}</h3>
+                <h3 className="category-names">{category.name}</h3>
               </Link>
             ))}
           </div>
@@ -279,13 +280,13 @@ const HomePage = () => {
                 "I'm absolutely in love with my new shoes! The quality is outstanding and they arrived even faster than
                 expected. Will definitely be shopping here again."
               </p>
-              <div className="testimonial-author">
+              <div className="testimonials-author">
                 <div className="author-avatar">
                   <img src="/images/avatar-1.jpg" alt="Customer" />
                 </div>
                 <div>
                   <h4 className="author-name">Sarah Johnson</h4>
-                  <p className="author-title">Verified Buyer</p>
+                  <p className="authors-titles">Verified Buyer</p>
                 </div>
               </div>
             </div>
@@ -302,13 +303,13 @@ const HomePage = () => {
                 "The customer service here is exceptional. I had an issue with my order and they resolved it
                 immediately. Plus, the products are top-notch quality!"
               </p>
-              <div className="testimonial-author">
+              <div className="testimonials-author">
                 <div className="author-avatar">
                   <img src="/images/avatar-2.jpg" alt="Customer" />
                 </div>
                 <div>
                   <h4 className="author-name">Michael Chen</h4>
-                  <p className="author-title">Verified Buyer</p>
+                  <p className="authors-titles">Verified Buyer</p>
                 </div>
               </div>
             </div>
@@ -325,13 +326,13 @@ const HomePage = () => {
                 "This is my go-to shop for fashion now. The selection is amazing and the prices are reasonable for the
                 quality you get. Highly recommend!"
               </p>
-              <div className="testimonial-author">
+              <div className="testimonials-author">
                 <div className="author-avatar">
                   <img src="/images/avatar-3.jpg" alt="Customer" />
                 </div>
                 <div>
                   <h4 className="author-name">Emily Rodriguez</h4>
-                  <p className="author-title">Verified Buyer</p>
+                  <p className="authors-titles">Verified Buyer</p>
                 </div>
               </div>
             </div>

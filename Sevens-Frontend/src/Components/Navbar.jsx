@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useCart } from "../context/CartContext"
 import { useAuth } from "../Context/AuthContext" 
 import SearchBar from "./SearchBar"
+import logo from "../assets/Images/logo.jpeg"
 import "../styles/Navbar.css"
 
 const Navbar = () => {
@@ -19,9 +20,9 @@ const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <Link to="/" className="navbar-logo">
-          Sevens
-        </Link>
+          <div className="navbar-logo">
+              <img src={logo} alt="Logo" />
+            </div>
 
         <div className="navbar-links">
           <Link to="/" className="navbar-link">

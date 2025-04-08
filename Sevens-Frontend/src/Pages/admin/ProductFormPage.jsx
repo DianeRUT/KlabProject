@@ -22,7 +22,7 @@ const ProductFormPage = () => {
     countInStock: "",
     image: "",
     isNew: false,
-    gender: [],
+    gender: [], // Ensure this is always initialized as an empty array
   })
 
   const [categories, setCategories] = useState([])
@@ -35,11 +35,27 @@ const ProductFormPage = () => {
     const fetchCategories = async () => {
       try {
         const data = await getCategories()
-        if (Array.isArray(data)) {
+        console.log("Fetched categories:", data)
+
+        if (Array.isArray(data) && data.length > 0) {
           setCategories(data)
+        } else {
+          console.warn("No categories returned from API, using fallback")
+          // Always provide fallback categories
+          setCategories([
+            { name: "Shoes", _id: "shoes-id" },
+            { name: "Clothes", _id: "clothes-id" },
+            { name: "Accessories", _id: "accessories-id" },
+          ])
         }
       } catch (err) {
         console.error("Error fetching categories:", err)
+        // Fallback to hardcoded categories if API fails
+        setCategories([
+          { name: "Shoes", _id: "shoes-id" },
+          { name: "Clothes", _id: "clothes-id" },
+          { name: "Accessories", _id: "accessories-id" },
+        ])
       }
     }
 
@@ -68,7 +84,7 @@ const ProductFormPage = () => {
           countInStock: product.countInStock || "",
           image: product.image || "",
           isNew: product.isNew || false,
-          gender: product.gender || [],
+          gender: Array.isArray(product.gender) ? product.gender : [], // Ensure gender is always an array
         })
 
         setImagePreview(product.image || "")
@@ -85,19 +101,30 @@ const ProductFormPage = () => {
     const { name, value, type, checked } = e.target
 
     if (type === "checkbox") {
-      setFormData({ ...formData, [name]: checked })
-    } else if (name === "gender") {
-      const updatedGender = [...formData.gender]
-      if (checked) {
-        updatedGender.push(value)
-      } else {
-        const index = updatedGender.indexOf(value)
-        if (index !== -1) {
-          updatedGender.splice(index, 1)
+      if (name === "gender") {
+        // Create a new array if gender is not already an array
+        const genderArray = Array.isArray(formData.gender) ? [...formData.gender] : []
+
+        if (checked) {
+          // Add the value if it's not already in the array
+          if (genderArray.indexOf(value) === -1) {
+            genderArray.push(value)
+          }
+        } else {
+          // Remove the value from the array
+          const index = genderArray.indexOf(value)
+          if (index !== -1) {
+            genderArray.splice(index, 1)
+          }
         }
+
+        setFormData({ ...formData, gender: genderArray })
+      } else {
+        // Handle other checkbox fields
+        setFormData({ ...formData, [name]: checked })
       }
-      setFormData({ ...formData, gender: updatedGender })
     } else {
+      // Handle non-checkbox fields
       setFormData({ ...formData, [name]: value })
     }
   }
@@ -188,11 +215,17 @@ const ProductFormPage = () => {
                   <label htmlFor="category">Category*</label>
                   <select id="category" name="category" value={formData.category} onChange={handleChange} required>
                     <option value="">Select Category</option>
-                    {categories.map((category) => (
-                      <option key={category._id} value={category.name}>
-                        {category.name}
+                    {categories && categories.length > 0 ? (
+                      categories.map((category) => (
+                        <option key={category._id || category.name} value={category.name}>
+                          {category.name}
+                        </option>
+                      ))
+                    ) : (
+                      <option value="" disabled>
+                        No categories available
                       </option>
-                    ))}
+                    )}
                   </select>
                 </div>
               </div>
@@ -292,7 +325,7 @@ const ProductFormPage = () => {
                       type="checkbox"
                       name="gender"
                       value="Men"
-                      checked={formData.gender.includes("Men")}
+                      checked={Array.isArray(formData.gender) ? formData.gender.indexOf("Men") !== -1 : false}
                       onChange={handleChange}
                     />
                     Men
@@ -303,7 +336,7 @@ const ProductFormPage = () => {
                       type="checkbox"
                       name="gender"
                       value="Women"
-                      checked={formData.gender.includes("Women")}
+                      checked={Array.isArray(formData.gender) ? formData.gender.indexOf("Women") !== -1 : false}
                       onChange={handleChange}
                     />
                     Women
@@ -314,7 +347,7 @@ const ProductFormPage = () => {
                       type="checkbox"
                       name="gender"
                       value="Unisex"
-                      checked={formData.gender.includes("Unisex")}
+                      checked={Array.isArray(formData.gender) ? formData.gender.indexOf("Unisex") !== -1 : false}
                       onChange={handleChange}
                     />
                     Unisex
@@ -382,4 +415,3 @@ const ProductFormPage = () => {
 }
 
 export default ProductFormPage
-

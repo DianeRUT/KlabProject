@@ -113,3 +113,9 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  .buy-now-btn{
+    background-color: #677A04;
+    color:#fff;
+  }
+  

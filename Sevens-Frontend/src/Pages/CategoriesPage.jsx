@@ -1,5 +1,11 @@
 import { Link } from 'react-router-dom';
 import '../styles/CategoriesPage.css';
+import women from "../assets/Images/women12.jpg"
+import men from "../assets/Images/men2.jpg"
+import accessories from "../assets/Images/access1.jpg"
+import kids from "../assets/Images/kids.jpg"
+import sports from "../assets/Images/sport.jpg"
+import sale from "../assets/Images/sale.jpg"
 
 const CategoriesPage = () => {
   // Category data with subcategories
@@ -7,7 +13,7 @@ const CategoriesPage = () => {
     {
       id: 1,
       name: 'Men',
-      image: '/images/category-men.jpg',
+      image: men,
       subcategories: [
         { id: 101, name: 'Shoes', count: 24 },
         { id: 102, name: 'Clothing', count: 36 },
@@ -18,7 +24,7 @@ const CategoriesPage = () => {
     {
       id: 2,
       name: 'Women',
-      image: '/images/category-women.jpg',
+      image: women,
       subcategories: [
         { id: 201, name: 'Shoes', count: 28 },
         { id: 202, name: 'Clothing', count: 42 },
@@ -29,7 +35,7 @@ const CategoriesPage = () => {
     {
       id: 3,
       name: 'Kids',
-      image: '/images/category-kids.jpg',
+      image: kids,
       subcategories: [
         { id: 301, name: 'Shoes', count: 16 },
         { id: 302, name: 'Clothing', count: 24 },
@@ -40,7 +46,7 @@ const CategoriesPage = () => {
     {
       id: 4,
       name: 'Sports',
-      image: '/images/category-sports.jpg',
+      image: sports,
       subcategories: [
         { id: 401, name: 'Running', count: 22 },
         { id: 402, name: 'Basketball', count: 18 },
@@ -51,7 +57,7 @@ const CategoriesPage = () => {
     {
       id: 5,
       name: 'Accessories',
-      image: '/images/category-accessories.jpg',
+      image: accessories,
       subcategories: [
         { id: 501, name: 'Bags', count: 15 },
         { id: 502, name: 'Watches', count: 12 },
@@ -62,7 +68,7 @@ const CategoriesPage = () => {
     {
       id: 6,
       name: 'Sale',
-      image: '/images/category-sale.jpg',
+      image: sale,
       subcategories: [
         { id: 601, name: 'Men', count: 45 },
         { id: 602, name: 'Women', count: 52 },

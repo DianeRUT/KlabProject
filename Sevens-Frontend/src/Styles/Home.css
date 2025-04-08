@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #fff;
+  color: #EDE9D0;
   padding: 0 20px;
 }
 
@@ -32,8 +32,8 @@
 .shop-now-btn {
   display: inline-block;
   padding: 14px 30px;
-  background-color: #007bff;
-  color: #fff;
+  background-color: #677A04;
+  color: #EDE9D0;
   font-size: 16px;
   font-weight: 600;
   border-radius: 4px;
@@ -41,7 +41,7 @@
 }
 
 .shop-now-btn:hover {
-  background-color: #0069d9;
+  background-color: #677A04;
 }
 
 /* Section Containers */
@@ -73,12 +73,12 @@
 .view-all-link {
   font-size: 16px;
   font-weight: 500;
-  color: #007bff;
+  color: #677A04;
   transition: color 0.3s ease;
 }
 
 .view-all-link:hover {
-  color: #0056b3;
+  color: #677A04;
 }
 
 /* Categories Section */
@@ -116,14 +116,14 @@
   transform: scale(1.05);
 }
 
-.category-name {
+.category-names {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   padding: 20px;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
-  color: #fff;
+  color: #EDE9D0;
   font-size: 24px;
   font-weight: 600;
 }
@@ -137,12 +137,12 @@
 
 /* Promotional Banner */
 .promo-banner {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("/images/promo-bg.jpg");
+  background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("../assets/Images/38.jpeg");
   background-size: cover;
   background-position: center;
   padding: 80px 20px;
   text-align: center;
-  color: #fff;
+  color: #EDE9D0;
 }
 
 .promo-content {
@@ -205,14 +205,14 @@
 }
 
 .testimonial-card {
-  background-color: #fff;
+  background-color: #677A04;
   border-radius: 8px;
   padding: 30px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .testimonial-rating {
-  color: #ffc107;
+  color: #677A04;
   font-size: 16px;
   margin-bottom: 15px;
 }
@@ -220,12 +220,12 @@
 .testimonial-text {
   font-size: 16px;
   line-height: 1.6;
-  color: #555;
+  color: #EDE9D0;
   margin-bottom: 20px;
   font-style: italic;
 }
 
-.testimonial-author {
+.testimonials-author {
   display: flex;
   align-items: center;
   gap: 15px;
@@ -250,9 +250,9 @@
   margin-bottom: 3px;
 }
 
-.author-title {
+.authors-titles {
   font-size: 14px;
-  color: #777;
+  color: #EDE9D0;
 }
 
 /* Newsletter Section */
@@ -297,8 +297,8 @@
 
 .newsletter-form button {
   padding: 14px 24px;
-  background-color: #0056b3;
-  color: #fff;
+  background-color: #677A04;
+  color: #EDE9D0;
   border: none;
   border-radius: 0 4px 4px 0;
   font-size: 16px;
@@ -307,7 +307,7 @@
 }
 
 .newsletter-form button:hover {
-  background-color: #004494;
+  background-color: #677A04;
 }
 
 /* Responsive Styles */

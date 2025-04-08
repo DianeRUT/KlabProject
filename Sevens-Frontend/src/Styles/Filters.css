@@ -48,11 +48,13 @@
 .price-slider input[type="range"] {
   width: 100%;
   cursor: pointer;
+  
 }
 
 .price-range-values {
   display: flex;
   justify-content: space-between;
   font-size: 14px;
+  
 }
 
