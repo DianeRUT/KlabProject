@@ -1,5 +1,6 @@
+"use client"
 
-import { createContext, useState, useContext } from "react"
+import { createContext, useState, useContext, useEffect } from "react"
 import { login as loginApi, register as registerApi, logout as logoutApi } from "../api/userApi"
 
 const AuthContext = createContext()
@@ -15,8 +16,20 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
 
+  // Check token on mount
+  useEffect(() => {
+    const token = localStorage.getItem("token")
+    const savedUserInfo = localStorage.getItem("userInfo")
+
+    if (!token && savedUserInfo) {
+      // Token missing but user info exists - clear user info
+      localStorage.removeItem("userInfo")
+      setUserInfo(null)
+    }
+  }, [])
+
   // Check if user is authenticated
-  const isAuthenticated = !!userInfo
+  const isAuthenticated = !!userInfo && !!localStorage.getItem("token")
 
   // Check if user is admin
   const isAdmin = userInfo?.isAdmin || false
@@ -73,4 +86,3 @@ export const AuthProvider = ({ children }) => {
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
-

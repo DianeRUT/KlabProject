@@ -49,15 +49,37 @@ const Navbar = () => {
 
             {isAuthenticated ? (
             <div className="user-dropdown">
-              <button className="navbar-action user-btn">
+              <button className="user-btn">
                 <i className="fas fa-user"></i>
                 <span className="user-name">{userInfo.name.split(" ")[0]}</span>
+                <i className="fas fa-chevron-down dropdown-arrow"></i>
               </button>
               <div className="dropdown-content">
-                <Link to="/profile">Profile</Link>
-                {userInfo.isAdmin && <Link to="/admin/dashboard">Admin</Link>}
-                <button onClick={logout} className="logout-btn">
-                  Logout
+                <div className="dropdown-header">
+                  <p className="dropdown-user-name">{userInfo.name}</p>
+                  <p className="dropdown-user-email">{userInfo.email}</p>
+                </div>
+                <div className="dropdown-divider"></div>
+                <Link to="/profile" className="dropdown-item">
+                  <i className="fas fa-user-circle"></i> My Profile
+                </Link>
+                <Link to="/orders/myorders" className="dropdown-item">
+                  <i className="fas fa-shopping-bag"></i> My Orders
+                </Link>
+                {userInfo.isAdmin && (
+                  <Link to="/admin/dashboard" className="dropdown-item admin-link">
+                    <i className="fas fa-tachometer-alt"></i> Admin Dashboard
+                  </Link>
+                )}
+                <div className="dropdown-divider"></div>
+                <button
+                  onClick={() => {
+                    logout()
+                    window.location.href = "/"
+                  }}
+                  className="logout-btn"
+                >
+                  <i className="fas fa-sign-out-alt"></i> Logout
                 </button>
               </div>
             </div>
@@ -77,7 +99,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar;
-
-
-
+export default Navbar

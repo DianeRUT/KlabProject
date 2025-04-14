@@ -1,29 +1,49 @@
-"use client"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Link, useNavigate, useLocation } from "react-router-dom"
-import { useAuth } from "../Context/AuthContext" 
+import { login } from "../api/userApi"
 import "../styles/LoginPage.css"
 
 const LoginPage = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  const { login, loading, error } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
   // Get redirect path from location state or default to home page
   const redirect = location.state?.from || "/"
 
+  // Check if already logged in
+  useEffect(() => {
+    const userInfo = localStorage.getItem("userInfo")
+    if (userInfo) {
+      navigate(redirect)
+    }
+  }, [navigate, redirect])
+
   const handleSubmit = async (e) => {
     e.preventDefault()
 
+    setLoading(true)
+    setError(null)
+
     try {
-      await login(email, password)
+      console.log("Submitting login form with:", { email })
+      const userData = await login(email, password)
+      console.log("Login successful:", userData)
+
+      // Verify token was saved
+      const token = localStorage.getItem("token")
+      console.log("Token saved:", token ? "Yes" : "No")
+
       navigate(redirect)
     } catch (err) {
-      // Error is handled in AuthContext
+      console.error("Login failed:", err)
+      setError(err.response?.data?.message || "Invalid email or password")
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -65,4 +85,3 @@ const LoginPage = () => {
 }
 
 export default LoginPage
-
