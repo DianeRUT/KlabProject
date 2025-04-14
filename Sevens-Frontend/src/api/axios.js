@@ -1,9 +1,10 @@
 import axios from "axios"
 
 // Create an axios instance with default config
+const baseURL = import.meta.env.VITE_BASE_URL
 const api = axios.create({
-  // Update to use port 3000 since that's where your backend is running
-  baseURL: "http://localhost:3000/api",
+ 
+  baseURL,
   headers: {
     "Content-Type": "application/json",
   },
